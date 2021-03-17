@@ -6,5 +6,12 @@ module.exports = {
                 args[0].title = 'GameDeals'
                 return args
             })
+    },
+    configureWebpack: {
+        devServer: {
+            watchOptions: {
+                poll: true
+            }
+        }
     }
 }
