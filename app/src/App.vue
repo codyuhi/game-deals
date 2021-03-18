@@ -20,7 +20,7 @@
                 placeholder="Game Name"
                 v-model="searchString"
               ></b-form-input>
-              <router-link :to="computedSearchLink"
+              <router-link :to="computedSearchLink" :searchString="searchString"
                 ><b-button size="sm" class="my-2 my-sm-0" type="submit"
                   >Search</b-button
                 >

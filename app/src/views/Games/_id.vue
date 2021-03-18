@@ -1,18 +1,27 @@
 <template>
   <div class="game">
+    <title-card
+      title="Game Details"
+      :descriptions="descriptions"
+      :showSearchButton="true"
+      imgClass="games-img"
+    />
     <p>{{ game }}</p>
   </div>
 </template>
 
 <script>
+import TitleCard from "../../components/TitleCard.vue";
 const gameData = require("../../../sampledata/Game.json");
 const ListOfStores = require("../../../sampledata/ListOfStores.json");
 
 export default {
+  components: { TitleCard },
   data() {
     return {
       game: {},
       storeData: new Array(),
+      descriptions: [],
     };
   },
   methods: {
@@ -28,6 +37,7 @@ export default {
       //     console.error(err);
       //   });
       this.game = gameData.game;
+      this.descriptions = ["More information about " + this.game.info.title];
     },
     getStoreData() {
       if (localStorage.storeData) {

@@ -10,8 +10,9 @@
         title="GameDeals"
         :descriptions="descriptions"
         :showSearchButton="true"
+        imgClass="main-img"
       />
-      <search-tile
+      <deal-tile
         v-for="deal in deals"
         :deal="deal"
         :storeData="storeData"
@@ -24,7 +25,7 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
-import SearchTile from "@/components/SearchTile.vue";
+import DealTile from "@/components/DealTile.vue";
 import TitleCard from "@/components/TitleCard.vue";
 const ListOfStores = require("../../sampledata/ListOfStores.json");
 const ListOfDeals = require("../../sampledata/ListOfDeals.json");
@@ -37,6 +38,7 @@ export default {
       deals: new Array(),
       storeData: new Array(),
       descriptions: [
+        "Powered by the CheapShark API",
         "This website allows you to find the best current deals on video games across many different websites",
         "Please use the search bar to find a game that you are interested in or take a look at the deals below",
       ],
@@ -45,7 +47,7 @@ export default {
   props: {},
   components: {
     HelloWorld,
-    SearchTile,
+    DealTile,
     TitleCard,
   },
   methods: {

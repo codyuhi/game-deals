@@ -1,12 +1,139 @@
 {
-    "searchResults": [
+    "results": [
         {
-            "gameID": "146",
-            "steamAppID": "35140",
-            "cheapest": "5.00",
-            "cheapestDealID": "n96QeQ9FLRDoZToO75BS2Dx22PPtc7hlpcehVxUlW2c%3D",
-            "external": "Batman: Arkham Asylum Game of the Year Edition",
-            "thumb": "https://steamcdn-a.akamaihd.net/steam/apps/35140/capsule_sm_120.jpg?t=1525990900"
+            "gameID": "269",
+            "steamAppID": "6060",
+            "cheapest": "6.88",
+            "cheapestDealID": "pQins0SyASMo0%2FccHNb%2FMqP%2FtHAnSPlQIw%2FOc8isY9E%3D",
+            "external": "Star Wars Battlefront II",
+            "internalName": "STARWARSBATTLEFRONTII",
+            "thumb": "https://cdn.cloudflare.steamstatic.com/steam/apps/1237950/capsule_sm_120.jpg?t=1615894850"
+        },
+        {
+            "gameID": "175216",
+            "steamAppID": null,
+            "cheapest": "9.99",
+            "cheapestDealID": "ny%2FAyP2gmQcJIBt2g8tcyoaTL5KT5aLxm%2FrM9mFFGQs%3D",
+            "external": "Star Wars Battlefront II (2005)",
+            "internalName": "STARWARSBATTLEFRONTII2005",
+            "thumb": "https://images-1.gog-statics.com/458d6b963755ce3b0afa93f9976e2c05360f569826b00f0c91442f8a892f19a9_196.jpg"
+        },
+        {
+            "gameID": "201094",
+            "steamAppID": "1058020",
+            "cheapest": "2.29",
+            "cheapestDealID": "7xzW9xguJDwyEd2RKjZAcSwMbhet24xtsmL5N9dFDk4%3D",
+            "external": "STAR WARS Battlefront (Classic, 2004)",
+            "internalName": "STARWARSBATTLEFRONTCLASSIC2004",
+            "thumb": "https://cdn.cloudflare.steamstatic.com/steam/apps/1058020/capsule_sm_120.jpg?t=1601587260"
+        },
+        {
+            "gameID": "198241",
+            "steamAppID": null,
+            "cheapest": "8.79",
+            "cheapestDealID": "pyl8x0t0aPAioB37HZg72%2FZN84r0az5CsoKpbv7g3GM%3D",
+            "external": "Star Wars: Battlefront 2 (Classic, 2005)",
+            "internalName": "STARWARSBATTLEFRONT2CLASSIC2005",
+            "thumb": "https://cdn.cloudflare.steamstatic.com/steam/apps/6060/capsule_sm_120.jpg?t=1602892465"
+        },
+        {
+            "gameID": "222725",
+            "steamAppID": null,
+            "cheapest": "9.99",
+            "cheapestDealID": "uVPytfXg%2B%2BxYT2bJ5Viziu4wnM7HteKpAh5T8xHZKSI%3D",
+            "external": "Star Wars Battlefront II (2005 Version)",
+            "internalName": "STARWARSBATTLEFRONTII2005VERSION",
+            "thumb": "https://cdn.allyouplay.com/content/products/thumbs/star-wars-battlefront-ii-2005-version_6581_2a758b12.1595494518_233.jpeg"
+        },
+        {
+            "gameID": "186128",
+            "steamAppID": null,
+            "cheapest": "4.99",
+            "cheapestDealID": "Rgs2fGCC%2BwIyjb7802NPYyFiiQb0TWsfAh7xsZ%2BBaeE%3D",
+            "external": "STAR WARS Battlefront II: 500 Crystals Pack",
+            "internalName": "STARWARSBATTLEFRONTII500CRYSTALSPACK",
+            "thumb": "https://originassets.akamaized.net/origin-com-store-final-assets-prod/193864/142.0x200.0/1061476_MB_142x200_en_US_^_2018-05-02-09-40-41_568db897537790eb04d577653870b9e6bb7b681f.jpg"
+        },
+        {
+            "gameID": "186132",
+            "steamAppID": null,
+            "cheapest": "2.49",
+            "cheapestDealID": "qPPCHljyvHBHN9X85p%2Bo2QKwJrg7Idug6w1vamaBM5U%3D",
+            "external": "STAR WARS Battlefront II: 200 Crystals Pack",
+            "internalName": "STARWARSBATTLEFRONTII200CRYSTALSPACK",
+            "thumb": "https://originassets.akamaized.net/origin-com-store-final-assets-prod/193864/142.0x200.0/1064857_MB_142x200_en_US_^_2018-05-02-09-40-16_55a00d1e413198c5b6837100d0c852482e2215a7.jpg"
+        },
+        {
+            "gameID": "207392",
+            "steamAppID": null,
+            "cheapest": "9.99",
+            "cheapestDealID": "cTJRkkP%2BOfPhofY5OuBqIRXE4xTLKYSTTDoUHd1BZk0%3D",
+            "external": "Star Wars Battlefront II - Crystals Pack 1000",
+            "internalName": "STARWARSBATTLEFRONTIICRYSTALSPACK1000",
+            "thumb": "https://images.2game.com/boxshot/44304_medium.jpg"
+        },
+        {
+            "gameID": "207391",
+            "steamAppID": null,
+            "cheapest": "19.99",
+            "cheapestDealID": "dtnpsN%2FQVVM6G%2FpZ1zHibUEUaDm8VgApKiPeMmJnKgc%3D",
+            "external": "Star Wars Battlefront II - Crystals Pack 2100",
+            "internalName": "STARWARSBATTLEFRONTIICRYSTALSPACK2100",
+            "thumb": "https://images.2game.com/boxshot/44307_medium.jpg"
+        },
+        {
+            "gameID": "186131",
+            "steamAppID": null,
+            "cheapest": "39.99",
+            "cheapestDealID": "gtV1QPT9Tlpm%2FPIp2KJPyjOqw5UZ8jumQ3FOx%2BGvBek%3D",
+            "external": "STAR WARS Battlefront II: 4400 Crystals Pack",
+            "internalName": "STARWARSBATTLEFRONTII4400CRYSTALSPACK",
+            "thumb": "https://originassets.akamaized.net/origin-com-store-final-assets-prod/193864/142.0x200.0/1061479_MB_142x200_en_US_^_2018-05-02-09-41-35_84cc59340b6cb22185b69a6214e3a5e7629fe727.jpg"
+        },
+        {
+            "gameID": "186129",
+            "steamAppID": null,
+            "cheapest": "9.99",
+            "cheapestDealID": "EjW4VtE0OVy%2F5zxu2Rdf94cbBaI0UWTowgdclPOwYVc%3D",
+            "external": "STAR WARS Battlefront II: 1000 Crystals Pack",
+            "internalName": "STARWARSBATTLEFRONTII1000CRYSTALSPACK",
+            "thumb": "https://originassets.akamaized.net/origin-com-store-final-assets-prod/193864/142.0x200.0/1061477_MB_142x200_en_US_^_2018-05-02-09-40-58_762138c6650691e2ce9ac8ecb4662a1e9f2b772b.jpg"
+        },
+        {
+            "gameID": "186130",
+            "steamAppID": null,
+            "cheapest": "19.99",
+            "cheapestDealID": "Kr6FFWypBPdxJxZuTU5hNMoBtg5Tz0mnlG%2BRXYELLsY%3D",
+            "external": "STAR WARS Battlefront II: 2100 Crystals Pack",
+            "internalName": "STARWARSBATTLEFRONTII2100CRYSTALSPACK",
+            "thumb": "https://originassets.akamaized.net/origin-com-store-final-assets-prod/193864/142.0x200.0/1061478_MB_142x200_en_US_^_2018-05-02-09-41-19_007889f6f37dfedd066f411f3718b74271ef6b7b.jpg"
+        },
+        {
+            "gameID": "222584",
+            "steamAppID": null,
+            "cheapest": "39.99",
+            "cheapestDealID": "xEwcuN6UNuQRHFOclfNA7qc8%2BZVHuHnMOK30Ar8SGWs%3D",
+            "external": "Star Wars? Battlefront? II - Crystals Pack 4400",
+            "internalName": "STARWARSBATTLEFRONTIICRYSTALSPACK4400",
+            "thumb": "https://cdn.allyouplay.com/content/products/thumbs/star-wars-battlefront-ii-crystals-pack-4400_233.jpeg"
+        },
+        {
+            "gameID": "207876",
+            "steamAppID": null,
+            "cheapest": "13.76",
+            "cheapestDealID": "yGSS8Xa8pW842%2FToWWVVLDL9r4UZajiB%2F5mmYysDgVU%3D",
+            "external": "STAR WARS Battlefront II: Celebration Edition",
+            "internalName": "STARWARSBATTLEFRONTIICELEBRATIONEDITION",
+            "thumb": "https://images.greenmangaming.com/a851ae7a1e1d4d4f8a57baec92955c81/a08b5deff5d7451a87781d4228024413.jpg"
+        },
+        {
+            "gameID": "207875",
+            "steamAppID": null,
+            "cheapest": "15.99",
+            "cheapestDealID": "Yv5g7lfknuHVOtJMpo2RkNnIX3JZApY%2FBHXTNQ7ICfk%3D",
+            "external": "STAR WARS Battlefront II: Celebration Edition Upgrade",
+            "internalName": "STARWARSBATTLEFRONTIICELEBRATIONEDITIONUPGRADE",
+            "thumb": "https://originassets.akamaized.net/origin-com-store-final-assets-prod/193864/142.0x200.0/1085063_MB_142x200_en_IE_^_2019-12-03-12-34-10_fbb7932df2f17837564835f22b35e557a50b6598.jpg"
         }
     ]
 }

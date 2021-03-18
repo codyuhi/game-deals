@@ -4,6 +4,7 @@
       title="Deal Details"
       :descriptions="descriptions"
       :showSearchButton="false"
+      imgClass="deals-img"
     />
     <div class="flex-column content">
       <img
@@ -71,8 +72,8 @@
         >Go to Dealer Site</b-button
       >
       <p class="smallest-text">
-        Clicking the button above will redirect you to the dealer site through
-        a CheapShark link. This supports the API provider
+        Clicking the button above will redirect you to the dealer site through a
+        CheapShark link. This supports the API provider
       </p>
     </div>
   </div>
@@ -84,6 +85,9 @@ const dealData = require("../../../sampledata/Deal.json");
 const ListOfStores = require("../../../sampledata/ListOfStores.json");
 
 export default {
+  props: {
+    searchString: String,
+  },
   components: { TitleCard },
   data() {
     return {

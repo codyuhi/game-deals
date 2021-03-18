@@ -21,6 +21,7 @@ const routes = [
   {
     path: '/Games/:gameid',
     name: 'Games',
+    props: true,
     component: () => import('../views/Games/_id.vue')
   },
   {

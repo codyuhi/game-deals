@@ -1,5 +1,5 @@
 <template>
-  <div class="title-card flex-column">
+  <div :class="'title-card flex-column ' + imgClass">
     <i class="fa fa-gamepad yellow-text title"></i>
     <h1 class="fancy-font title yellow-text">{{ title }}</h1>
     <p
@@ -16,7 +16,7 @@
         placeholder="Game Name"
         v-model="searchString"
       ></b-form-input>
-      <router-link :to="computedSearchLink"
+      <router-link :to="computedSearchLink" :searchString="searchString"
         ><b-button size="sm" class="my-2 my-sm-0" type="submit"
           >Search</b-button
         >
@@ -31,6 +31,7 @@ export default {
     title: String,
     descriptions: Array,
     showSearchButton: Boolean,
+    imgClass: String
   },
   data() {
     return {
@@ -48,7 +49,20 @@ export default {
 </script>
 
 <style scoped>
-.title-card {
+.main-img {
+  background-repeat: none;
+  background-size: cover;
+  background-position: 0px;
+  background-image: linear-gradient(
+      90deg,
+      rgba(232, 237, 223, 0.88) 0%,
+      rgba(51, 53, 51, 0.44) 58.88%,
+      rgba(36, 36, 35, 0) 100%
+    ),
+    url("../assets/main-dark.jpg");
+}
+
+.deals-img {
   background-repeat: none;
   background-size: cover;
   background-position: 0px;
@@ -59,6 +73,35 @@ export default {
       rgba(36, 36, 35, 0) 100%
     ),
     url("../assets/deal-dark.jpg");
+}
+
+.games-img {
+  background-repeat: none;
+  background-size: cover;
+  background-position: 0px;
+  background-image: linear-gradient(
+      90deg,
+      rgba(232, 237, 223, 0.88) 0%,
+      rgba(51, 53, 51, 0.44) 58.88%,
+      rgba(36, 36, 35, 0) 100%
+    ),
+    url("../assets/game-original.jpg");
+}
+
+.search-img {
+  background-repeat: none;
+  background-size: cover;
+  background-position: 0px;
+  background-image: linear-gradient(
+      90deg,
+      rgba(232, 237, 223, 0.88) 0%,
+      rgba(51, 53, 51, 0.44) 58.88%,
+      rgba(36, 36, 35, 0) 100%
+    ),
+    url("../assets/search-original.jpg");
+}
+
+.title-card {
   width: 100vw;
   height: auto;
   text-align: center;

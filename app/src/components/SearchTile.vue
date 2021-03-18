@@ -1,95 +1,37 @@
 <template>
   <div
-    class="container flex-column"
-    :title="'View this deal for ' + deal.title"
+    class="search-tile flex-column"
+    :title="'View more information about ' + game.external"
   >
     <hr />
-    <router-link :to="'/deals/' + deal.dealID">
+    <router-link :to="'/games/' + game.gameID">
       <div class="child-container">
         <div class="flex-row cell-left">
           <img
-            :src="deal.thumb"
+            :src="game.thumb"
             class="thumbnail-image"
-            :alt="'Cover art for ' + deal.title"
+            :alt="'Cover art for ' + game.external"
           />
         </div>
         <div class="flex-row cell-right">
           <div class="flex-column">
+            <div class="flex-row">
+              <h2 class="game-title">{{ game.external }}</h2>
+            </div>
             <div class="flex-column">
-              <h2 class="game-title">
-                <router-link :to="'/games/' + deal.gameID">{{
-                  deal.title
-                }}</router-link>
-              </h2>
-              <p class="release-date">
-                Released {{ convertDate(deal.releaseDate) }}
+              <p>
+                Cheapest current deal for {{ game.external }} is <strong>${{
+                  game.cheapest
+                }}</strong>
               </p>
-            </div>
-            <div class="flex-row">
-              <div class="cell">
-                <p>
-                  Sale Price:
-                  <span class="sale-price">${{ deal.salePrice }}</span> on
-                  <span class="store"
-                    >{{ getStoreName(deal.storeID) }}
-                    <img
-                      class="store-icon"
-                      :src="
-                        'https://www.cheapshark.com' +
-                        getStoreIcon(deal.storeID)
-                      "
-                  /></span>
-                </p>
-              </div>
-              <div class="cell">
-                <p>
-                  Normal Price:
-                  <span class="normal-price">${{ deal.normalPrice }}</span>
-                </p>
-              </div>
-            </div>
-            <div class="flex-row">
-              <div class="cell">
-                <p class="savings">
-                  Savings: {{ parseFloat(deal.savings).toFixed(2) }}%
-                </p>
-              </div>
-              <div class="cell">
-                <p class="deal-rating">
-                  Deal Rating: {{ deal.dealRating }} / 10
-                </p>
-              </div>
-            </div>
-            <div class="flex-row" v-if="deal.steamRatingText">
-              <div class="cell">
-                <p v-if="deal.steamRatingText">
-                  Rated
-                  <span class="steam-rating-text">{{
-                    deal.steamRatingText
-                  }}</span>
-                  on Steam <i class="fa fa-steam"></i>
-                </p>
-              </div>
-              <div class="cell">
-                <p v-if="deal.steamRatingText">
-                  (<span class="rating-percent">{{
-                    deal.steamRatingPercent
-                  }}</span
-                  >% positive out of
-                  <span class="rating-count">{{ deal.steamRatingCount }}</span>
-                  Steam ratings)
-                </p>
-              </div>
-            </div>
-            <div class="flex-row">
-              <div class="cell">
-                <p v-if="deal.metacriticScore">
-                  Metacritic Score:
-                  <span class="metacritic-score">{{
-                    deal.metacriticScore
-                  }}</span>
-                </p>
-              </div>
+              <p>
+                <router-link
+                  :to="'/deals/' + game.cheapestDealID"
+                  class="yellow-link"
+                  >Click here</router-link
+                >
+                to view more information about this deal
+              </p>
             </div>
           </div>
         </div>
@@ -102,40 +44,7 @@
 <script>
 export default {
   props: {
-    deal: Object,
-    storeData: Array,
-  },
-  // data() {
-  //   return {
-  //   }
-  // }
-  methods: {
-    convertDate(unixDate) {
-      const format = {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-      };
-      return new Date(unixDate * 1000).toLocaleString("en-US", format);
-    },
-    getStoreName(storeId) {
-      const storeData = this.$props.storeData;
-      for (let i = 0; i < storeData.length; i++) {
-        if (storeId === storeData[i].storeID) {
-          return storeData[i].storeName;
-        }
-      }
-      return "Anonymous store";
-    },
-    getStoreIcon(storeId) {
-      const storeData = this.$props.storeData;
-      for (let i = 0; i < storeData.length; i++) {
-        if (storeId === storeData[i].storeID) {
-          return storeData[i].images.icon;
-        }
-      }
-      return undefined;
-    },
+    game: Object,
   },
 };
 </script>
@@ -145,6 +54,10 @@ export default {
 *:hover {
   color: #242423 !important;
   text-decoration: none;
+}
+
+p {
+  margin: 15px 25px 15px 25px;
 }
 
 .container {
@@ -169,24 +82,18 @@ hr {
 }
 
 .cell-left {
-  flex: 3;
+  flex: 4;
 }
 
 .cell-right {
   flex: 5;
 }
 
-.cell {
-  display: flex;
-  flex: 1;
-  margin-left: 30px;
-  text-align: center;
-}
-
 .flex-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   width: 100%;
 }
@@ -201,44 +108,25 @@ hr {
 .thumbnail-image {
   width: 100%;
   height: auto;
-  max-width: 500px;
+  max-width: 80vw;
 }
 
 .game-title {
-  margin-top: 15px;
+  margin: 15px;
 }
 
-.store {
-}
-
-.store-icon {
-}
-
-.sale-price {
-}
-
-.normal-price {
-}
-
-.metacritic-score {
-}
-
-.steam-rating-text {
-}
-
-.steam-rating-percent {
-}
-
-.steam-rating-count {
-}
-
-.release-date {
-}
-
-.last-change {
+.yellow-link {
+  color: #f5cb5c !important;
+  text-shadow: 1px 1px 1px var(--dark);
+  z-index: 5;
 }
 
 @media only screen and (min-width: 450px) {
+  .thumbnail-image {
+    max-width: 500px;
+    margin-left: 25px;
+  }
+
   .child-container {
     flex-direction: row;
   }
