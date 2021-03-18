@@ -19,9 +19,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "SearchResults" */ '../views/SearchResults/_search-string.vue')
   },
   {
-    path: '/Game/:gameid',
-    name: 'Game',
-    component: () => import('../views/Game/_id.vue')
+    path: '/Games/:gameid',
+    name: 'Games',
+    component: () => import('../views/Games/_id.vue')
+  },
+  {
+    path: '/Deals/:dealid',
+    name: 'Deals',
+    component: () => import('../views/Deals/_id.vue')
   }
 ]
 

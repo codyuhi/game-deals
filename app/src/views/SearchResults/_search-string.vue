@@ -1,12 +1,23 @@
 <template>
   <div class="search-results">
-    <h1>This is the search results page</h1>
-    <router-link to="/">Return home</router-link>
+    <p>{{ searchResults }}</p>
   </div>
 </template>
 
 <script>
+const searchResults = require("../../../sampledata/SearchResults.json");
+
 export default {
-  props: ["searchString"],
+  data() {
+    return {
+      searchResults: new Array(),
+    };
+  },
+  methods: {
+    getSearchResults() {},
+  },
+  created() {
+    this.getSearchResults();
+  },
 };
 </script>

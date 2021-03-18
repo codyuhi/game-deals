@@ -31,6 +31,12 @@
       </b-navbar>
     </div>
     <router-view />
+    <div id="footer">
+      <div class="flex-column">
+        <p><a href="">Click here</a> to view this website's code on Github</p>
+        <p>&copy; Cody Uhi 2021</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -90,5 +96,13 @@ a {
 .btn {
   background-color: var(--banana) !important;
   color: var(--dark) !important;
+}
+
+#footer {
+  background-color: var(--darkest) !important;
+  padding: 15px;
+  width: 100vw;
+  text-align: center;
+  color: var(--lightest);
 }
 </style>
