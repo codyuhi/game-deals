@@ -17,7 +17,7 @@
             "steamworks": "1",
             "thumb": "https://steamcdn-a.akamaihd.net/steam/apps/8870/capsule_sm_120.jpg?t=1534538071"
         },
-        "cheaperStores": [],
+        "cheaperStores": ["test", "test"],
         "cheapestPrice": {
             "price": "5.90",
             "date": 1528368365

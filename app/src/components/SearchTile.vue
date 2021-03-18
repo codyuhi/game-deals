@@ -1,83 +1,99 @@
 <template>
-  <div class="container flex-column" :title="'View this deal for ' + deal.title">
+  <div
+    class="container flex-column"
+    :title="'View this deal for ' + deal.title"
+  >
     <hr />
     <router-link :to="'/deals/' + deal.dealID">
-    <div class="flex-row child-container">
-      <div class="flex-row cell-left">
-        <img :src="deal.thumb" class="thumbnail-image" alt="test" />
-      </div>
-      <div class="flex-row cell-right">
-        <div class="flex-column">
+      <div class="child-container">
+        <div class="flex-row cell-left">
+          <img
+            :src="deal.thumb"
+            class="thumbnail-image"
+            :alt="'Cover art for ' + deal.title"
+          />
+        </div>
+        <div class="flex-row cell-right">
           <div class="flex-column">
-            <h2 class="game-title"><router-link :to="'/games/' + deal.gameID">{{ deal.title }}</router-link></h2>
-            <p class="release-date">
-              Released {{ convertDate(deal.releaseDate) }}
-            </p>
-          </div>
-          <div class="flex-row">
-            <div class="cell">
-              <p>
-                Sale Price:
-                <span class="sale-price">${{ deal.salePrice }}</span> at
-                <span class="store"
-                  >{{ getStoreName(deal.storeID) }}
-                  <img
-                    class="store-icon"
-                    :src="
-                      'https://www.cheapshark.com' + getStoreIcon(deal.storeID)
-                    "
-                /></span>
+            <div class="flex-column">
+              <h2 class="game-title">
+                <router-link :to="'/games/' + deal.gameID">{{
+                  deal.title
+                }}</router-link>
+              </h2>
+              <p class="release-date">
+                Released {{ convertDate(deal.releaseDate) }}
               </p>
             </div>
-            <div class="cell">
-              <p>
-                Normal Price:
-                <span class="normal-price">${{ deal.normalPrice }}</span>
-              </p>
+            <div class="flex-row">
+              <div class="cell">
+                <p>
+                  Sale Price:
+                  <span class="sale-price">${{ deal.salePrice }}</span> on
+                  <span class="store"
+                    >{{ getStoreName(deal.storeID) }}
+                    <img
+                      class="store-icon"
+                      :src="
+                        'https://www.cheapshark.com' +
+                        getStoreIcon(deal.storeID)
+                      "
+                  /></span>
+                </p>
+              </div>
+              <div class="cell">
+                <p>
+                  Normal Price:
+                  <span class="normal-price">${{ deal.normalPrice }}</span>
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="flex-row">
-            <div class="cell">
-              <p class="savings">
-                Savings: {{ parseFloat(deal.savings).toFixed(2) }}%
-              </p>
+            <div class="flex-row">
+              <div class="cell">
+                <p class="savings">
+                  Savings: {{ parseFloat(deal.savings).toFixed(2) }}%
+                </p>
+              </div>
+              <div class="cell">
+                <p class="deal-rating">
+                  Deal Rating: {{ deal.dealRating }} / 10
+                </p>
+              </div>
             </div>
-            <div class="cell">
-              <p class="deal-rating">Deal Rating: {{ deal.dealRating }} / 10</p>
+            <div class="flex-row" v-if="deal.steamRatingText">
+              <div class="cell">
+                <p v-if="deal.steamRatingText">
+                  Rated
+                  <span class="steam-rating-text">{{
+                    deal.steamRatingText
+                  }}</span>
+                  on Steam <i class="fa fa-steam"></i>
+                </p>
+              </div>
+              <div class="cell">
+                <p v-if="deal.steamRatingText">
+                  (<span class="rating-percent">{{
+                    deal.steamRatingPercent
+                  }}</span
+                  >% positive out of
+                  <span class="rating-count">{{ deal.steamRatingCount }}</span>
+                  Steam ratings)
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="flex-row" v-if="deal.steamRatingText">
-            <div class="cell">
-              <p v-if="deal.steamRatingText">
-                Rated
-                <span class="steam-rating-text">{{
-                  deal.steamRatingText
-                }}</span>
-                on Steam <i class="fa fa-steam"></i>
-              </p>
-            </div>
-            <div class="cell">
-              <p v-if="deal.steamRatingText">
-                (<span class="rating-percent">{{
-                  deal.steamRatingPercent
-                }}</span
-                >% positive out of
-                <span class="rating-count">{{ deal.steamRatingCount }}</span>
-                Steam ratings)
-              </p>
-            </div>
-          </div>
-          <div class="flex-row">
-            <div class="cell">
-              <p v-if="deal.metacriticScore">
-                Metacritic Score:
-                <span class="metacritic-score">{{ deal.metacriticScore }}</span>
-              </p>
+            <div class="flex-row">
+              <div class="cell">
+                <p v-if="deal.metacriticScore">
+                  Metacritic Score:
+                  <span class="metacritic-score">{{
+                    deal.metacriticScore
+                  }}</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </router-link>
     <hr />
   </div>
@@ -137,10 +153,13 @@ export default {
 
 .container:hover {
   cursor: pointer;
-
 }
 
 .child-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
   margin: 15px 0 15px 0;
 }
 
@@ -161,7 +180,7 @@ hr {
   display: flex;
   flex: 1;
   margin-left: 30px;
-  text-align: left;
+  text-align: center;
 }
 
 .flex-row {
@@ -186,6 +205,7 @@ hr {
 }
 
 .game-title {
+  margin-top: 15px;
 }
 
 .store {
@@ -216,5 +236,15 @@ hr {
 }
 
 .last-change {
+}
+
+@media only screen and (min-width: 450px) {
+  .child-container {
+    flex-direction: row;
+  }
+
+  .cell {
+    text-align: left;
+  }
 }
 </style>

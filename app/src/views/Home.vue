@@ -6,6 +6,11 @@
       <p>{{ deal }}</p>
     </div> -->
     <div class="flex-column">
+      <title-card
+        title="GameDeals"
+        :descriptions="descriptions"
+        :showSearchButton="true"
+      />
       <search-tile
         v-for="deal in deals"
         :deal="deal"
@@ -13,7 +18,6 @@
         :key="deal.dealID"
       />
     </div>
-    <router-link to="/games/test">Test Game</router-link>
   </div>
 </template>
 
@@ -21,6 +25,7 @@
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
 import SearchTile from "@/components/SearchTile.vue";
+import TitleCard from "@/components/TitleCard.vue";
 const ListOfStores = require("../../sampledata/ListOfStores.json");
 const ListOfDeals = require("../../sampledata/ListOfDeals.json");
 
@@ -31,12 +36,17 @@ export default {
       isLoading: false,
       deals: new Array(),
       storeData: new Array(),
+      descriptions: [
+        "This website allows you to find the best current deals on video games across many different websites",
+        "Please use the search bar to find a game that you are interested in or take a look at the deals below",
+      ],
     };
   },
   props: {},
   components: {
     HelloWorld,
     SearchTile,
+    TitleCard,
   },
   methods: {
     getListOfDeals() {
@@ -69,7 +79,7 @@ export default {
       //     return res.json();
       //   })
       //   .then((json) => {
-        
+
       //     this.storeData = json;
       //   localStorage.storeData = JSON.stringify(this.storeData)
       //   })

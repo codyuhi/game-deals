@@ -3,7 +3,7 @@
     <div id="nav">
       <b-navbar toggleable="lg" type="dark" variant="info">
         <b-navbar-brand
-          ><router-link to="/"
+          ><router-link to="/" class="fancy-font"
             ><i class="fa fa-gamepad"></i> GameDeals</router-link
           ></b-navbar-brand
         >
@@ -33,7 +33,10 @@
     <router-view />
     <div id="footer">
       <div class="flex-column">
-        <p><a href="">Click here</a> to view this website's code on Github</p>
+        <p>
+          <a href="https://github.com/codyuhi/game-deals">Click here</a> to view
+          this website's code on Github
+        </p>
         <p>&copy; Cody Uhi 2021</p>
       </div>
     </div>
@@ -104,5 +107,10 @@ a {
   width: 100vw;
   text-align: center;
   color: var(--lightest);
+}
+
+.fancy-font {
+  font-family: "Lobster", cursive;
+  color: var(--banana);
 }
 </style>
