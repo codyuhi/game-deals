@@ -101,7 +101,7 @@ hr {
 .flex-column {
   display: flex;
   flex-direction: column;
-  align-content: center;
+  align-items: center;
   width: 100%;
 }
 

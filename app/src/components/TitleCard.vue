@@ -31,7 +31,7 @@ export default {
     title: String,
     descriptions: Array,
     showSearchButton: Boolean,
-    imgClass: String
+    imgClass: String,
   },
   data() {
     return {
@@ -85,7 +85,7 @@ export default {
       rgba(51, 53, 51, 0.44) 58.88%,
       rgba(36, 36, 35, 0) 100%
     ),
-    url("../assets/game-original.jpg");
+    url("../assets/game-dark.jpg");
 }
 
 .search-img {
@@ -98,7 +98,20 @@ export default {
       rgba(51, 53, 51, 0.44) 58.88%,
       rgba(36, 36, 35, 0) 100%
     ),
-    url("../assets/search-original.jpg");
+    url("../assets/search-dark.jpg");
+}
+
+.favorites-img {
+  background-repeat: none;
+  background-size: cover;
+  background-position: 0px;
+  background-image: linear-gradient(
+      90deg,
+      rgba(232, 237, 223, 0.88) 0%,
+      rgba(51, 53, 51, 0.44) 58.88%,
+      rgba(36, 36, 35, 0) 100%
+    ),
+    url("../assets/favorites-dark.jpg");
 }
 
 .title-card {

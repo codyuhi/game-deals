@@ -1,80 +1,85 @@
 <template>
   <div class="deal">
-    <title-card
-      title="Deal Details"
-      :descriptions="descriptions"
-      :showSearchButton="false"
-      imgClass="deals-img"
-    />
-    <div class="flex-column content">
-      <img
-        class="thumbnail-image"
-        :src="deal.gameInfo.thumb"
-        :alt="'Cover art for ' + deal.gameInfo.name"
+    <div v-if="isLoading" class="flex-column is-loading">
+      <h2>Loading . . .</h2>
+    </div>
+    <div v-else>
+      <title-card
+        title="Deal Details"
+        :descriptions="descriptions"
+        :showSearchButton="false"
+        imgClass="deals-img"
       />
-      <h2 class="title">
-        <router-link
-          class="yellow-link"
-          :to="'/games/' + deal.gameInfo.gameID"
-          >{{ deal.gameInfo.name }}</router-link
-        >
-      </h2>
-      <p>
-        Released {{ convertDate(deal.gameInfo.releaseDate) }} by
-        {{ deal.gameInfo.publisher }}
-      </p>
-      <p>
-        On sale for ${{ deal.gameInfo.salePrice }} on
-        {{ getStoreName(deal.gameInfo.storeID) }}
+      <div class="flex-column content">
         <img
-          :src="
-            'https://www.cheapshark.com' + getStoreIcon(deal.gameInfo.storeID)
-          "
+          class="thumbnail-image"
+          :src="deal.gameInfo.thumb"
+          :alt="'Cover art for ' + deal.gameInfo.name"
         />
-        (Usually ${{ deal.gameInfo.retailPrice }})
-      </p>
-      <p>
-        The best deal ever offered for this game was ${{
-          deal.cheapestPrice.price
-        }}
-        on {{ convertDate(deal.cheapestPrice.date) }}
-      </p>
-      <div v-if="deal.cheaperStores.length > 1">
-        <p>There are currently better deals on the following sites:</p>
-        <p v-for="d in deal.cheaperStores" :key="d" class="small-text">
-          - {{ d }} -
-        </p>
-      </div>
-      <p v-else-if="deal.cheaperStores.length === 1">
-        There is currently a better deal at {{ deal.cheaperStores[0] }}
-      </p>
-      <p v-else>This is the best deal for this game at the moment</p>
-      <div v-if="deal.gameInfo.steamRatingText">
-        <p>Rated {{ deal.gameInfo.steamRatingText }} on Steam</p>
+        <h2 class="title">
+          <router-link
+            class="yellow-link"
+            :to="'/games/' + deal.gameInfo.gameID"
+            >{{ deal.gameInfo.name }}</router-link
+          >
+        </h2>
         <p>
-          {{ deal.gameInfo.steamRatingPercent }}% positive out of
-          {{ deal.gameInfo.steamRatingCount }} Steam ratings
+          Released {{ convertDate(deal.gameInfo.releaseDate) }} by
+          {{ deal.gameInfo.publisher }}
+        </p>
+        <p>
+          On sale for ${{ deal.gameInfo.salePrice }} on
+          {{ getStoreName(deal.gameInfo.storeID) }}
+          <img
+            :src="
+              'https://www.cheapshark.com' + getStoreIcon(deal.gameInfo.storeID)
+            "
+          />
+          (Usually ${{ deal.gameInfo.retailPrice }})
+        </p>
+        <p v-if="deal.cheapestPrice && deal.cheapestPrice.date">
+          The best deal ever offered for this game was ${{
+            deal.cheapestPrice.price
+          }}
+          on {{ convertDate(deal.cheapestPrice.date) }}
+        </p>
+        <div v-if="deal.cheaperStores.length > 1">
+          <p>There are currently better deals on the following sites:</p>
+          <p v-for="d in deal.cheaperStores" :key="d" class="small-text">
+            - {{ d }} -
+          </p>
+        </div>
+        <p v-else-if="deal.cheaperStores.length === 1">
+          There is currently a better deal at {{ deal.cheaperStores[0] }}
+        </p>
+        <p v-else>This is the best deal for this game at the moment</p>
+        <div v-if="deal.gameInfo.steamRatingText">
+          <p>Rated {{ deal.gameInfo.steamRatingText }} on Steam</p>
+          <p>
+            {{ deal.gameInfo.steamRatingPercent }}% positive out of
+            {{ deal.gameInfo.steamRatingCount }} Steam ratings
+          </p>
+        </div>
+        <p v-if="deal.gameInfo.metacriticScore">
+          Rated {{ deal.gameInfo.metacriticScore }} on Metacritic.
+          <a
+            class="yellow-link"
+            :href="'https://www.metacritic.com' + deal.gameInfo.metacriticLink"
+            >Read reviews</a
+          >
+        </p>
+        <b-button
+          size="sm"
+          class="my-2 my-sm-0 dealer-button"
+          type="submit"
+          @click="openDealer()"
+          >Go to Dealer Site</b-button
+        >
+        <p class="smallest-text">
+          Clicking the button above will redirect you to the dealer site through
+          a CheapShark link. This supports the API provider
         </p>
       </div>
-      <p v-if="deal.gameInfo.metacriticScore">
-        Rated {{ deal.gameInfo.metacriticScore }} on Metacritic.
-        <a
-          class="yellow-link"
-          :href="'https://www.metacritic.com' + deal.gameInfo.metacriticLink"
-          >Read reviews</a
-        >
-      </p>
-      <b-button
-        size="sm"
-        class="my-2 my-sm-0 dealer-button"
-        type="submit"
-        @click="openDealer()"
-        >Go to Dealer Site</b-button
-      >
-      <p class="smallest-text">
-        Clicking the button above will redirect you to the dealer site through a
-        CheapShark link. This supports the API provider
-      </p>
     </div>
   </div>
 </template>
@@ -91,6 +96,7 @@ export default {
   components: { TitleCard },
   data() {
     return {
+      isLoading: false,
       deal: {},
       storeData: new Array(),
       descriptions: [],
@@ -99,47 +105,64 @@ export default {
   computed: {},
   methods: {
     getDealData() {
-      //   fetch(
-      //     "https://www.cheapshark.com/api/1.0/deals?id=" + this.$route.path.slice(7),
-      //     {}
-      //   )
-      //     .then((res) => {
-      //       return res.json();
-      //     })
-      //     .then((json) => {
-      //       this.deal = json;
-      //     })
-      //     .catch((err) => {
-      //       console.error(err);
-      //     });
-      this.deal = dealData.deal;
-      this.descriptions.push(
-        this.deal.gameInfo
-          ? "More information about the deal for " +
-              this.deal.gameInfo.name +
-              " on " +
-              this.getStoreName(this.deal.gameInfo.storeID)
-          : ""
-      );
+      this.isLoading = true;
+      fetch(
+        "https://www.cheapshark.com/api/1.0/deals?id=" +
+          this.$route.path.slice(7),
+        {}
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          this.deal = json;
+          this.descriptions.push(
+            this.deal.gameInfo
+              ? "More information about the deal for " +
+                  this.deal.gameInfo.name +
+                  " on " +
+                  this.getStoreName(this.deal.gameInfo.storeID)
+              : ""
+          );
+        })
+        .catch((err) => {
+          console.error(err);
+          this.deal = dealData.deal;
+          this.descriptions.push(
+            this.deal.gameInfo
+              ? "More information about the deal for " +
+                  this.deal.gameInfo.name +
+                  " on " +
+                  this.getStoreName(this.deal.gameInfo.storeID)
+              : ""
+          );
+        })
+        .finally((fin) => {
+          this.isLoading = false;
+        });
     },
     getStoreData() {
       if (localStorage.storeData) {
         this.storeData = JSON.parse(localStorage.storeData);
         return;
       }
-      //   fetch("https://www.cheapshark.com/api/1.0/stores", {
-      //   })
-      //     .then((res) => {
-      //       return res.json();
-      //     })
-      //     .then((json) => {
-      //       this.storeData = json;
-      //     localStorage.storeData = JSON.stringify(this.storeData)
-      //     })
-      //     .catch((err) => {
-      //       console.error(err);
-      //     });
-      this.storeData = ListOfStores.listOfStores;
+      fetch("https://www.cheapshark.com/api/1.0/stores", {})
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          this.storeData = json;
+          localStorage.storeData = JSON.stringify(this.storeData);
+        })
+        .catch((err) => {
+          console.error(err);
+          alert(
+            "Unable to perform API call because of this error:",
+            err,
+            "\nThis page will display dummy data to continue to show the structure of the page"
+          );
+          this.storeData = ListOfStores.listOfStores;
+        });
     },
     getStoreName(storeId) {
       for (let i = 0; i < this.storeData.length; i++) {
@@ -210,5 +233,9 @@ h2 {
 
 .yellow-link {
   text-shadow: 1px 1px 1px var(--dark);
+}
+
+.is-loading {
+  height: 95vh;
 }
 </style>

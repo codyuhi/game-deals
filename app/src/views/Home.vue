@@ -1,11 +1,9 @@
 <template>
   <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/logo.png"/>
-    <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <!-- <div class="deal-card" v-for="deal in deals" :key="deal.dealID">
-      <p>{{ deal }}</p>
-    </div> -->
-    <div class="flex-column">
+    <div v-if="isLoading" class="flex-column is-loading">
+      <h2>Loading . . .</h2>
+    </div>
+    <div v-else class="flex-column">
       <title-card
         title="GameDeals"
         :descriptions="descriptions"
@@ -52,43 +50,51 @@ export default {
   },
   methods: {
     getListOfDeals() {
-      // this.isLoading = true;
-      // fetch("https://www.cheapshark.com/api/1.0/deals?onSale=1", {})
-      //   .then((res) => {
-      //     return res.json();
-      //   })
-      //   .then((json) => {
-      //     json.forEach((deal) => {
-      //       this.deals.push(deal);
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-      //   })
-      //   .finally((fin) => {
-      //     this.isLoading = false;
-      //   });
-      this.deals = ListOfDeals.listOfDeals;
+      this.isLoading = true;
+      fetch("https://www.cheapshark.com/api/1.0/deals?onSale=1", {})
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          json.forEach((deal) => {
+            this.deals.push(deal);
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+          alert(
+            "Unable to perform API call because of this error:",
+            err,
+            "\nThis page will display dummy data to continue to show the structure of the page"
+          );
+          this.deals = ListOfDeals.listOfDeals;
+        })
+        .finally((fin) => {
+          this.isLoading = false;
+        });
     },
     getStoreData() {
       if (localStorage.storeData) {
         this.storeData = JSON.parse(localStorage.storeData);
         return;
       }
-      // fetch("https://www.cheapshark.com/api/1.0/stores", {
-      // })
-      //   .then((res) => {
-      //     return res.json();
-      //   })
-      //   .then((json) => {
-
-      //     this.storeData = json;
-      //   localStorage.storeData = JSON.stringify(this.storeData)
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-      //   });
-      this.storeData = ListOfStores.listOfStores;
+      fetch("https://www.cheapshark.com/api/1.0/stores", {})
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          this.storeData = json;
+          localStorage.storeData = JSON.stringify(this.storeData);
+        })
+        .catch((err) => {
+          console.error(err);
+          alert(
+            "Unable to perform API call because of this error:",
+            err,
+            "\nThis page will display dummy data to continue to show the structure of the page"
+          );
+          this.storeData = ListOfStores.listOfStores;
+        });
     },
   },
   created() {
@@ -103,6 +109,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: baseline;
-  align-content: center;
+  align-items: center;
+}
+
+.is-loading {
+  height: 95vh;
 }
 </style>

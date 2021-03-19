@@ -90,6 +90,12 @@
                   }}</span>
                 </p>
               </div>
+              <div class="cell">
+                <router-link to="/"
+                  ><p @click="addToFavorites(deal)" class="yellow-text">
+                    Add to Favorites <i class="fa fa-heart"></i></p
+                ></router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -136,6 +142,59 @@ export default {
       }
       return undefined;
     },
+    addToFavorites(deal) {
+      let favorites;
+      let favoriteGroup;
+      let favoriteIndex = -1;
+      if (!localStorage.favorites) {
+        localStorage.favorites = "[]";
+        favorites = [];
+      } else {
+        favorites = JSON.parse(localStorage.favorites);
+      }
+      let promptString =
+        "Please type in the nickname of the favorites group you want to add this to (enter an existing nickname to add to an existing group)\nExisting nicknames: ";
+      if (favorites.length < 1) {
+        promptString += "None. Enter a new nickname";
+      }
+      for (let i = 0; i < favorites.length; i++) {
+        if (i !== 0) {
+          promptString += ", ";
+        }
+        promptString += favorites[i].nickname;
+      }
+      let nickname = prompt(promptString);
+      for (let i = 0; i < favorites.length; i++) {
+        if (nickname === favorites[i].nickname) {
+          favoriteIndex = i;
+          break;
+        }
+      }
+      const newFavorite = {
+        name: deal.title,
+        id: deal.gameID,
+      };
+      if (favoriteIndex === -1) {
+        favoriteGroup = {
+          nickname: nickname,
+          favoriteList: [newFavorite],
+        };
+        favorites.push(favoriteGroup);
+      } else {
+        favoriteGroup = favorites[favoriteIndex];
+        for (let i = 0; i < favoriteGroup.favoriteList.length; i++) {
+          if (favoriteGroup.favoriteList[i].id === newFavorite.id) {
+            alert(
+              `${newFavorite.name} is already present in the ${nickname} favorite group. Try a different group/game.`
+            );
+            return;
+          }
+        }
+        favoriteGroup.favoriteList.push(newFavorite);
+        favorites[favoriteIndex] = favoriteGroup;
+      }
+      localStorage.favorites = JSON.stringify(favorites);
+    },
   },
 };
 </script>
@@ -159,7 +218,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 80vw;
   margin: 15px 0 15px 0;
 }
 
@@ -169,17 +228,16 @@ hr {
 }
 
 .cell-left {
-  flex: 3;
+  /* flex: 3; */
 }
 
 .cell-right {
-  flex: 5;
+  /* flex: 1; */
 }
 
 .cell {
   display: flex;
   flex: 1;
-  margin-left: 30px;
   text-align: center;
 }
 
@@ -194,18 +252,24 @@ hr {
 .flex-column {
   display: flex;
   flex-direction: column;
-  align-content: center;
+  align-items: center;
   width: 100%;
 }
 
 .thumbnail-image {
-  width: 100%;
+  width: 300px;
   height: auto;
-  max-width: 500px;
+  max-width: 95vw;
 }
 
 .game-title {
   margin-top: 15px;
+}
+
+.yellow-text {
+  color: #f5cb5c !important;
+  text-shadow: 1px 1px 1px var(--dark);
+  z-index: 5;
 }
 
 @media only screen and (min-width: 450px) {
@@ -214,6 +278,7 @@ hr {
   }
 
   .cell {
+    margin-left: 30px;
     text-align: left;
   }
 }

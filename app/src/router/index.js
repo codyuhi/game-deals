@@ -28,6 +28,11 @@ const routes = [
     path: '/Deals/:dealid',
     name: 'Deals',
     component: () => import('../views/Deals/_id.vue')
+  },
+  {
+    path: '/Favorites',
+    name: 'Favorites',
+    component: () => import('../views/Favorites.vue')
   }
 ]
 
