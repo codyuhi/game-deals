@@ -9,9 +9,7 @@ module.exports = {
     },
     configureWebpack: {
         devServer: {
-            watchOptions: {
-                poll: true
-            }
+            liveReload: true
         }
     }
 }

@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["SearchResults"],{c119:function(e,s,t){"use strict";t.r(s);var r=function(){var e=this,s=e.$createElement,t=e._self._c||s;return t("div",{staticClass:"search-results"},[t("h1",[e._v("This is the search results page")]),t("router-link",{attrs:{to:"/"}},[e._v("Return home")])],1)},n=[],a={props:["searchString"]},c=a,l=t("2877"),u=Object(l["a"])(c,r,n,!1,null,null,null);s["default"]=u.exports}}]);
-//# sourceMappingURL=SearchResults.c8830f7e.js.map
