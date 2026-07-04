@@ -1,285 +1,319 @@
-<template>
-  <div
-    class="container flex-column"
-    :title="'View this deal for ' + deal.title"
-  >
-    <hr />
-    <router-link :to="'/deals/' + deal.dealID">
-      <div class="child-container">
-        <div class="flex-row cell-left">
-          <img
-            :src="deal.thumb"
-            class="thumbnail-image"
-            :alt="'Cover art for ' + deal.title"
-          />
-        </div>
-        <div class="flex-row cell-right">
-          <div class="flex-column">
-            <div class="flex-column">
-              <h2 class="game-title">
-                <router-link :to="'/games/' + deal.gameID">{{
-                  deal.title
-                }}</router-link>
-              </h2>
-              <p class="release-date">
-                Released {{ convertDate(deal.releaseDate) }}
-              </p>
-            </div>
-            <div class="flex-row">
-              <div class="cell">
-                <p>
-                  Sale Price:
-                  <span class="sale-price">${{ deal.salePrice }}</span> on
-                  <span class="store"
-                    >{{ getStoreName(deal.storeID) }}
-                    <img
-                      class="store-icon"
-                      :src="
-                        'https://www.cheapshark.com' +
-                        getStoreIcon(deal.storeID)
-                      "
-                  /></span>
-                </p>
-              </div>
-              <div class="cell">
-                <p>
-                  Normal Price:
-                  <span class="normal-price">${{ deal.normalPrice }}</span>
-                </p>
-              </div>
-            </div>
-            <div class="flex-row">
-              <div class="cell">
-                <p class="savings">
-                  Savings: {{ parseFloat(deal.savings).toFixed(2) }}%
-                </p>
-              </div>
-              <div class="cell">
-                <p class="deal-rating">
-                  Deal Rating: {{ deal.dealRating }} / 10
-                </p>
-              </div>
-            </div>
-            <div class="flex-row" v-if="deal.steamRatingText">
-              <div class="cell">
-                <p v-if="deal.steamRatingText">
-                  Rated
-                  <span class="steam-rating-text">{{
-                    deal.steamRatingText
-                  }}</span>
-                  on Steam <i class="fa fa-steam"></i>
-                </p>
-              </div>
-              <div class="cell">
-                <p v-if="deal.steamRatingText">
-                  (<span class="rating-percent">{{
-                    deal.steamRatingPercent
-                  }}</span
-                  >% positive out of
-                  <span class="rating-count">{{ deal.steamRatingCount }}</span>
-                  Steam ratings)
-                </p>
-              </div>
-            </div>
-            <div class="flex-row">
-              <div class="cell">
-                <p v-if="deal.metacriticScore">
-                  Metacritic Score:
-                  <span class="metacritic-score">{{
-                    deal.metacriticScore
-                  }}</span>
-                </p>
-              </div>
-              <div class="cell">
-                <router-link to="/"
-                  ><p @click="addToFavorites(deal)" class="yellow-text">
-                    Add to Favorites <i class="fa fa-heart"></i></p
-                ></router-link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </router-link>
-    <hr />
-  </div>
-</template>
+<script setup lang="ts">
+import { computed } from 'vue'
+import type { Deal, Store, FavoriteItem } from '../types'
 
-<script>
-export default {
-  props: {
-    deal: Object,
-    storeData: Array,
-  },
-  // data() {
-  //   return {
-  //   }
-  // }
-  methods: {
-    convertDate(unixDate) {
-      const format = {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-      };
-      return new Date(unixDate * 1000).toLocaleString("en-US", format);
-    },
-    getStoreName(storeId) {
-      const storeData = this.$props.storeData;
-      for (let i = 0; i < storeData.length; i++) {
-        if (storeId === storeData[i].storeID) {
-          return storeData[i].storeName;
-        }
-      }
-      return "Anonymous store";
-    },
-    getStoreIcon(storeId) {
-      const storeData = this.$props.storeData;
-      for (let i = 0; i < storeData.length; i++) {
-        if (storeId === storeData[i].storeID) {
-          return storeData[i].images.icon;
-        }
-      }
-      return undefined;
-    },
-    addToFavorites(deal) {
-      let favorites;
-      let favoriteGroup;
-      let favoriteIndex = -1;
-      if (!localStorage.favorites) {
-        localStorage.favorites = "[]";
-        favorites = [];
-      } else {
-        favorites = JSON.parse(localStorage.favorites);
-      }
-      let promptString =
-        "Please type in the nickname of the favorites group you want to add this to (enter an existing nickname to add to an existing group)\nExisting nicknames: ";
-      if (favorites.length < 1) {
-        promptString += "None. Enter a new nickname";
-      }
-      for (let i = 0; i < favorites.length; i++) {
-        if (i !== 0) {
-          promptString += ", ";
-        }
-        promptString += favorites[i].nickname;
-      }
-      let nickname = prompt(promptString);
-      for (let i = 0; i < favorites.length; i++) {
-        if (nickname === favorites[i].nickname) {
-          favoriteIndex = i;
-          break;
-        }
-      }
-      const newFavorite = {
-        name: deal.title,
-        id: deal.gameID,
-      };
-      if (favoriteIndex === -1) {
-        favoriteGroup = {
-          nickname: nickname,
-          favoriteList: [newFavorite],
-        };
-        favorites.push(favoriteGroup);
-      } else {
-        favoriteGroup = favorites[favoriteIndex];
-        for (let i = 0; i < favoriteGroup.favoriteList.length; i++) {
-          if (favoriteGroup.favoriteList[i].id === newFavorite.id) {
-            alert(
-              `${newFavorite.name} is already present in the ${nickname} favorite group. Try a different group/game.`
-            );
-            return;
-          }
-        }
-        favoriteGroup.favoriteList.push(newFavorite);
-        favorites[favoriteIndex] = favoriteGroup;
-      }
-      localStorage.favorites = JSON.stringify(favorites);
-    },
-  },
-};
+const props = defineProps<{
+  deal: Deal
+  storeData: Store[]
+}>()
+
+const emit = defineEmits<{
+  (e: 'favorite', item: FavoriteItem): void
+}>()
+
+const convertDate = (unixDate: number) => {
+  if (!unixDate) return 'N/A'
+  const format: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  }
+  return new Date(unixDate * 1000).toLocaleString('en-US', format)
+}
+
+const storeInfo = computed(() => {
+  const store = props.storeData.find(s => s.storeID === props.deal.storeID)
+  return {
+    name: store ? store.storeName : 'Anonymous store',
+    icon: store ? `https://www.cheapshark.com${store.images.icon}` : undefined
+  }
+})
+
+const handleFavorite = (e: Event) => {
+  e.preventDefault()
+  e.stopPropagation()
+  emit('favorite', {
+    name: props.deal.title,
+    id: props.deal.gameID
+  })
+}
 </script>
 
+<template>
+  <article class="deal-card glass-card">
+    <div class="thumbnail-wrapper">
+      <router-link :to="'/deals/' + deal.dealID" class="thumbnail-link" :aria-label="'View deal details for ' + deal.title">
+        <img
+          :src="deal.thumb"
+          class="thumbnail-image"
+          :alt="'Cover art for ' + deal.title"
+          loading="lazy"
+        />
+      </router-link>
+      <span class="badge badge-savings" v-if="parseFloat(deal.savings) > 0">
+        -{{ parseFloat(deal.savings).toFixed(0) }}%
+      </span>
+    </div>
+
+    <div class="card-body">
+      <div class="store-row">
+        <img
+          v-if="storeInfo.icon"
+          class="store-icon"
+          :src="storeInfo.icon"
+          :alt="storeInfo.name"
+        />
+        <span class="store-name">{{ storeInfo.name }}</span>
+      </div>
+
+      <h3 class="game-title">
+        <router-link :to="'/games/' + deal.gameID" class="title-link">
+          {{ deal.title }}
+        </router-link>
+      </h3>
+
+      <p class="release-date" v-if="deal.releaseDate">
+        Released {{ convertDate(deal.releaseDate) }}
+      </p>
+
+      <div class="prices-row">
+        <div class="price-box">
+          <span class="price-label">Sale Price</span>
+          <span class="sale-price">${{ deal.salePrice }}</span>
+        </div>
+        <div class="price-box">
+          <span class="price-label">Retail</span>
+          <span class="normal-price">${{ deal.normalPrice }}</span>
+        </div>
+      </div>
+
+      <div class="ratings-grid">
+        <div class="rating-badge" :title="deal.dealRating + ' / 10 deal quality score'">
+          <i class="fa fa-tag text-muted"></i>
+          <span>{{ deal.dealRating }}/10 Deal</span>
+        </div>
+        
+        <div v-if="deal.steamRatingText" class="rating-badge badge-steam" :title="deal.steamRatingPercent + '% positive on Steam'">
+          <i class="fab fa-steam"></i>
+          <span>{{ deal.steamRatingPercent }}%</span>
+        </div>
+
+        <div v-if="deal.metacriticScore && deal.metacriticScore !== '0'" class="rating-badge badge-metacritic" :title="'Metacritic: ' + deal.metacriticScore">
+          <i class="fa fa-star"></i>
+          <span>MC {{ deal.metacriticScore }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button @click="handleFavorite" class="fav-btn" aria-label="Add to favorites">
+        <i class="fa fa-heart"></i> Favorite
+      </button>
+      <router-link :to="'/deals/' + deal.dealID" class="btn-primary view-deal-btn">
+        Details <i class="fa fa-arrow-right"></i>
+      </router-link>
+    </div>
+  </article>
+</template>
+
 <style scoped>
-*,
-*:hover {
-  color: #242423 !important;
-  text-decoration: none;
-}
-
-.container {
-  width: 80vw;
-}
-
-.container:hover {
-  cursor: pointer;
-}
-
-.child-container {
+.deal-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 80vw;
-  margin: 15px 0 15px 0;
-}
-
-hr {
+  height: 100%;
+  overflow: hidden;
+  max-width: 380px;
   width: 100%;
-  margin: 0;
+
+  &:hover {
+    border-color: var(--border-color-hover);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.02);
+    transform: translateY(-4px);
+  }
 }
 
-.cell-left {
-  /* flex: 3; */
-}
-
-.cell-right {
-  /* flex: 1; */
-}
-
-.cell {
-  display: flex;
-  flex: 1;
-  text-align: center;
-}
-
-.flex-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
+.thumbnail-wrapper {
+  position: relative;
   width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 }
 
-.flex-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.thumbnail-link {
+  display: block;
   width: 100%;
+  height: 100%;
 }
 
 .thumbnail-image {
-  width: 300px;
-  height: auto;
-  max-width: 95vw;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.badge-savings {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.store-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.store-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.store-name {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
 }
 
 .game-title {
-  margin-top: 15px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-block-end: 0.35rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.yellow-text {
-  color: #f5cb5c !important;
-  text-shadow: 1px 1px 1px var(--dark);
-  z-index: 5;
+.title-link {
+  color: var(--text-primary);
+  
+  &:hover {
+    color: var(--accent);
+  }
 }
 
-@media only screen and (min-width: 450px) {
-  .child-container {
-    flex-direction: row;
+.release-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-block-end: 1rem;
+}
+
+.prices-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-block-end: 1rem;
+  margin-top: auto;
+}
+
+.price-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sale-price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.normal-price {
+  font-size: 1.1rem;
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.ratings-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  
+  i {
+    font-size: 0.8rem;
+  }
+}
+
+.badge-steam {
+  color: var(--rating-steam);
+  border-color: rgba(56, 189, 248, 0.15);
+}
+
+.badge-metacritic {
+  color: var(--rating-metacritic);
+  border-color: rgba(234, 88, 12, 0.2);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem 1.25rem;
+  border-block-start: 1px solid var(--border-color);
+}
+
+.fav-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+
+  i {
+    transition: transform 0.2s ease;
   }
 
-  .cell {
-    margin-left: 30px;
-    text-align: left;
+  &:hover {
+    color: #f43f5e;
+    
+    i {
+      transform: scale(1.15);
+    }
   }
+}
+
+.view-deal-btn {
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
 }
 </style>

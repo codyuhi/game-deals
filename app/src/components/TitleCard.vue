@@ -1,151 +1,151 @@
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+
+const props = defineProps<{
+  title: string
+  descriptions: string[]
+  showSearchButton?: boolean
+  imgClass?: string // We use this to compute gradients instead of background images
+}>()
+
+const searchString = ref('')
+const router = useRouter()
+
+const gradientStyle = computed(() => {
+  switch (props.imgClass) {
+    case 'main-img': // Amber/Gold Theme
+      return 'radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
+    case 'deals-img': // Emerald/Teal Theme
+      return 'radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
+    case 'games-img': // Sky/Blue Theme
+      return 'radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
+    case 'search-img': // Indigo/Purple Theme
+      return 'radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
+    case 'favorites-img': // Rose/Crimson Theme
+      return 'radial-gradient(circle at 80% 20%, rgba(244, 63, 94, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
+    default:
+      return 'radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.03) 0%, rgba(9, 13, 22, 0) 50%)'
+  }
+})
+
+const handleSearch = () => {
+  const query = searchString.value.trim()
+  if (query) {
+    router.push(`/SearchResults/${encodeURIComponent(query)}`)
+  } else {
+    router.push('/')
+  }
+}
+</script>
+
 <template>
-  <div :class="'title-card flex-column ' + imgClass">
-    <i class="fa fa-gamepad yellow-text title"></i>
-    <h1 class="fancy-font title yellow-text">{{ title }}</h1>
-    <p
-      class="yellow-text description"
-      v-for="description in descriptions"
-      :key="description"
-    >
-      {{ description }}
-    </p>
-    <b-nav-form v-if="showSearchButton">
-      <b-form-input
-        size="sm"
-        class="mr-sm-2"
-        placeholder="Game Name"
-        v-model="searchString"
-      ></b-form-input>
-      <router-link :to="computedSearchLink" :searchString="searchString"
-        ><b-button size="sm" class="my-2 my-sm-0" type="submit"
-          >Search</b-button
-        >
-      </router-link>
-    </b-nav-form>
+  <div class="title-card-container" :style="{ backgroundImage: gradientStyle }">
+    <div class="title-card-content">
+      <div class="icon-wrapper">
+        <i class="fa fa-gamepad gamepad-icon"></i>
+      </div>
+      <h1 class="hero-title">{{ title }}</h1>
+      <p v-for="desc in descriptions" :key="desc" class="hero-description">
+        {{ desc }}
+      </p>
+
+      <form v-if="showSearchButton" @submit.prevent="handleSearch" class="search-form">
+        <input
+          v-model="searchString"
+          type="text"
+          placeholder="Search PC games..."
+          class="form-input search-input"
+        />
+        <button type="submit" class="btn-primary">
+          <i class="fa fa-search"></i> Search
+        </button>
+      </form>
+    </div>
+    
+    <div class="bottom-divider"></div>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    title: String,
-    descriptions: Array,
-    showSearchButton: Boolean,
-    imgClass: String,
-  },
-  data() {
-    return {
-      searchString: "",
-    };
-  },
-  computed: {
-    computedSearchLink() {
-      return this.searchString && this.searchString !== ""
-        ? "/SearchResults/" + this.searchString
-        : "/";
-    },
-  },
-};
-</script>
-
 <style scoped>
-.main-img {
-  background-repeat: none;
-  background-size: cover;
-  background-position: 0px;
-  background-image: linear-gradient(
-      90deg,
-      rgba(232, 237, 223, 0.88) 0%,
-      rgba(51, 53, 51, 0.44) 58.88%,
-      rgba(36, 36, 35, 0) 100%
-    ),
-    url("../assets/main-dark.jpg");
+.title-card-container {
+  width: 100%;
+  padding-block: 4rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-secondary);
 }
 
-.deals-img {
-  background-repeat: none;
-  background-size: cover;
-  background-position: 0px;
-  background-image: linear-gradient(
-      90deg,
-      rgba(232, 237, 223, 0.88) 0%,
-      rgba(51, 53, 51, 0.44) 58.88%,
-      rgba(36, 36, 35, 0) 100%
-    ),
-    url("../assets/deal-dark.jpg");
-}
-
-.games-img {
-  background-repeat: none;
-  background-size: cover;
-  background-position: 0px;
-  background-image: linear-gradient(
-      90deg,
-      rgba(232, 237, 223, 0.88) 0%,
-      rgba(51, 53, 51, 0.44) 58.88%,
-      rgba(36, 36, 35, 0) 100%
-    ),
-    url("../assets/game-dark.jpg");
-}
-
-.search-img {
-  background-repeat: none;
-  background-size: cover;
-  background-position: 0px;
-  background-image: linear-gradient(
-      90deg,
-      rgba(232, 237, 223, 0.88) 0%,
-      rgba(51, 53, 51, 0.44) 58.88%,
-      rgba(36, 36, 35, 0) 100%
-    ),
-    url("../assets/search-dark.jpg");
-}
-
-.favorites-img {
-  background-repeat: none;
-  background-size: cover;
-  background-position: 0px;
-  background-image: linear-gradient(
-      90deg,
-      rgba(232, 237, 223, 0.88) 0%,
-      rgba(51, 53, 51, 0.44) 58.88%,
-      rgba(36, 36, 35, 0) 100%
-    ),
-    url("../assets/favorites-dark.jpg");
-}
-
-.title-card {
-  width: 100vw;
-  height: auto;
-  text-align: center;
-  padding: 50px 0 50px 0;
+.title-card-content {
+  max-width: 800px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
-
-.title {
-  font-size: 75px;
-}
-
-.yellow-text {
-  color: #f5cb5c;
-  text-shadow: 2px 2px 8px #333533;
-}
-
-.description {
-  font-size: 17px;
-  max-width: 80vw;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
-@media only screen and (min-width: 450px) {
-  .title {
-    font-size: 150px;
+.icon-wrapper {
+  margin-block-end: 1rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.02);
+}
+
+.gamepad-icon {
+  font-size: 1.75rem;
+  color: var(--accent);
+  filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 4vw + 1rem, 4rem);
+  letter-spacing: -0.03em;
+  margin-block-end: 1rem;
+  background: linear-gradient(135deg, #fff 30%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 1.15rem);
+  color: var(--text-secondary);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-block-end: 0.5rem;
+
+  &:last-of-type {
+    margin-block-end: 2rem;
   }
-  .description {
-    font-size: 25px;
-  }
+}
+
+.search-form {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 480px;
+}
+
+.search-input {
+  flex-grow: 1;
+  height: 42px;
+}
+
+.bottom-divider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--border-color) 50%, transparent 100%);
 }
 </style>

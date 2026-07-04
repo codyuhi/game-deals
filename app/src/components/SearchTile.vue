@@ -1,138 +1,151 @@
+<script setup lang="ts">
+import type { SearchResult } from '../types'
+
+defineProps<{
+  game: SearchResult
+}>()
+</script>
+
 <template>
-  <div
-    class="search-tile flex-column"
-    :title="'View more information about ' + game.external"
-  >
-    <hr />
-    <router-link :to="'/games/' + game.gameID">
-      <div class="child-container">
-        <div class="flex-row cell-left">
-          <img
-            :src="game.thumb"
-            class="thumbnail-image"
-            :alt="'Cover art for ' + game.external"
-          />
-        </div>
-        <div class="flex-row cell-right">
-          <div class="flex-column">
-            <div class="flex-row">
-              <h2 class="game-title">{{ game.external }}</h2>
-            </div>
-            <div class="flex-column">
-              <p>
-                Cheapest current deal for {{ game.external }} is <strong>${{
-                  game.cheapest
-                }}</strong>
-              </p>
-              <p>
-                <router-link
-                  :to="'/deals/' + game.cheapestDealID"
-                  class="yellow-link"
-                  >Click here</router-link
-                >
-                to view more information about this deal
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </router-link>
-    <hr />
+  <div class="search-tile glass-card">
+    <div class="tile-image-wrapper">
+      <router-link :to="'/games/' + game.gameID" class="image-link" :aria-label="'View game details for ' + game.external">
+        <img
+          :src="game.thumb"
+          class="thumbnail-image"
+          :alt="'Cover art for ' + game.external"
+          loading="lazy"
+        />
+      </router-link>
+    </div>
+
+    <div class="tile-info">
+      <h3 class="game-title">
+        <router-link :to="'/games/' + game.gameID" class="title-link">
+          {{ game.external }}
+        </router-link>
+      </h3>
+      <p class="cheapest-deal-text">
+        Cheapest current deal is <strong>${{ game.cheapest }}</strong>
+      </p>
+    </div>
+
+    <div class="tile-actions">
+      <router-link :to="'/deals/' + game.cheapestDealID" class="btn-primary deal-button">
+        View Deal <i class="fa fa-tag"></i>
+      </router-link>
+      <router-link :to="'/games/' + game.gameID" class="btn-secondary details-button">
+        Game Info
+      </router-link>
+    </div>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    game: Object,
-  },
-};
-</script>
-
 <style scoped>
-*,
-*:hover {
-  color: #242423 !important;
-  text-decoration: none;
-}
-
-p {
-  margin: 15px 25px 15px 25px;
-}
-
-.container {
-  width: 80vw;
-}
-
-.container:hover {
-  cursor: pointer;
-}
-
-.child-container {
+.search-tile {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  margin-block-end: 1rem;
   width: 100%;
-  margin: 15px 0 15px 0;
+
+  &:hover {
+    border-color: var(--border-color-hover);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
 }
 
-hr {
+.tile-image-wrapper {
   width: 100%;
-  margin: 0;
-}
-
-.cell-left {
-  flex: 4;
-}
-
-.cell-right {
-  flex: 5;
-}
-
-.flex-row {
+  aspect-ratio: 16 / 9;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  align-items: center;
-  width: 100%;
+  flex-shrink: 0;
 }
 
-.flex-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.image-link {
+  display: block;
   width: 100%;
+  height: 100%;
 }
 
 .thumbnail-image {
   width: 100%;
-  height: auto;
-  max-width: 80vw;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tile-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 0.5rem;
 }
 
 .game-title {
-  margin: 15px;
-}
-
-.yellow-link {
-  color: #f5cb5c !important;
-  text-shadow: 1px 1px 1px var(--dark);
-  z-index: 5;
-}
-
-@media only screen and (min-width: 450px) {
-  .thumbnail-image {
-    max-width: 500px;
-    margin-left: 25px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  
+  .title-link {
+    color: var(--text-primary);
+    
+    &:hover {
+      color: var(--accent);
+    }
   }
+}
 
-  .child-container {
+.cheapest-deal-text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  
+  strong {
+    color: var(--accent);
+    font-size: 1.05rem;
+  }
+}
+
+.tile-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.deal-button, .details-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  flex-grow: 1;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .search-tile {
     flex-direction: row;
+    align-items: center;
   }
 
-  .cell {
-    text-align: left;
+  .tile-image-wrapper {
+    width: 160px;
+    height: 90px;
+  }
+
+  .tile-actions {
+    flex-direction: column;
+    margin-top: 0;
+    align-items: stretch;
+    width: 150px;
+  }
+  
+  .deal-button, .details-button {
+    flex-grow: 0;
   }
 }
 </style>
