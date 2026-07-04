@@ -1,4 +1,7 @@
 #!/bin/zsh
 
-docker build -t game-deals .
-docker run -p 80:80 game-deals
+# Build the Docker image
+docker build -t harbor.minipc.local/library/game-deals:latest .
+
+# Push the Docker image to the local Harbor registry
+docker push harbor.minipc.local/library/game-deals:latest
