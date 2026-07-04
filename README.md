@@ -35,6 +35,16 @@ yarn build
 ```
 This generates production-ready assets inside the `app/dist/` directory.
 
+### Step 4: Running Unit Tests
+To run Vitest unit tests to verify component functionality and prevent regressions:
+```bash
+# Run tests in watch mode
+yarn test
+
+# Run tests once for CI verification
+yarn test:run
+```
+
 ---
 
 ## 🐳 Docker Build & Push

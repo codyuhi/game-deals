@@ -14,8 +14,8 @@ const router = useRouter()
 
 const gradientStyle = computed(() => {
   switch (props.imgClass) {
-    case 'main-img': // Amber/Gold Theme
-      return 'radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
+    case 'main-img': // Sky Blue Theme
+      return 'radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
     case 'deals-img': // Emerald/Teal Theme
       return 'radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
     case 'games-img': // Sky/Blue Theme
