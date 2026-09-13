@@ -31,7 +31,7 @@ jobs:
           python3 -c '
           import json, glob, sys
           for f in glob.glob("**/*.json", recursive=True):
-              if "node_modules" not in f and ".git" not in f:
+              if "node_modules" not in f and ".git" not in f and "dist" not in f:
                   try:
                       json.load(open(f))
                   except Exception as e:
@@ -46,3 +46,30 @@ jobs:
           dockerfile: "Dockerfile"
           ignore: DL3008,DL3018,DL3013
         continue-on-error: true
+
+  test-and-build:
+    name: Frontend Build & Unit Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+          cache-dependency-path: app/yarn.lock
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Application Check
+        run: yarn build
+
+      - name: Run Unit Tests
+        run: yarn test:run
+
