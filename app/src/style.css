@@ -45,6 +45,12 @@
     --rating-steam: #38bdf8;
     --rating-metacritic: #ea580c;
     
+    /* Safe Area Inset Variables */
+    --sat: env(safe-area-inset-top, 0px);
+    --sar: env(safe-area-inset-right, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+    --sal: env(safe-area-inset-left, 0px);
+
     /* Typography */
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -55,8 +61,11 @@
     color: var(--text-primary);
     font-family: var(--font-body);
     line-height: 1.5;
+    min-height: 100vh;
+    min-height: 100dvh;
     min-block-size: 100dvh;
     overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -106,8 +115,10 @@
     border: 1px solid var(--border-color);
     border-radius: 8px;
     color: var(--text-primary);
-    padding: 0.5rem 1rem;
-    font-size: 0.95rem;
+    padding: 0.6rem 1rem;
+    font-size: 16px; /* Prevents iOS Safari auto-zoom */
+    min-height: 44px;
+    touch-action: manipulation;
     width: 100%;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
@@ -258,7 +269,15 @@
   .page-container {
     max-inline-size: 1200px;
     margin-inline: auto;
-    padding-inline: 1.5rem;
-    padding-block: 2rem;
+    padding-inline: max(1rem, var(--sal));
+    padding-inline-end: max(1rem, var(--sar));
+    padding-block: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .page-container {
+      padding-inline: 1.5rem;
+      padding-block: 2rem;
+    }
   }
 }

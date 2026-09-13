@@ -122,13 +122,18 @@ const handleFavorite = (e: Event) => {
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  max-width: 380px;
+  max-width: 100%;
   width: 100%;
+  touch-action: manipulation;
 
   &:hover {
     border-color: var(--border-color-hover);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.02);
     transform: translateY(-4px);
+  }
+
+  &:active {
+    transform: scale(0.99);
   }
 }
 
@@ -285,19 +290,24 @@ const handleFavorite = (e: Event) => {
   align-items: center;
   padding: 0.75rem 1.25rem 1.25rem;
   border-block-start: 1px solid var(--border-color);
+  gap: 0.75rem;
 }
 
 .fav-btn {
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   color: var(--text-secondary);
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
   font-size: 0.85rem;
   font-weight: 600;
-  transition: color 0.2s ease;
+  min-height: 42px;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
 
   i {
     transition: transform 0.2s ease;
@@ -310,10 +320,16 @@ const handleFavorite = (e: Event) => {
       transform: scale(1.15);
     }
   }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 .view-deal-btn {
-  padding: 0.4rem 1rem;
+  padding: 0.5rem 1.15rem;
   font-size: 0.85rem;
+  min-height: 42px;
+  touch-action: manipulation;
 }
 </style>

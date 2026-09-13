@@ -70,16 +70,22 @@ const handleSearch = () => {
 <style scoped>
 .title-card-container {
   width: 100%;
-  padding-block: 4rem 3.5rem;
+  padding-block: 2.25rem 2rem;
   position: relative;
   overflow: hidden;
   background-color: var(--bg-secondary);
 }
 
+@media (min-width: 640px) {
+  .title-card-container {
+    padding-block: 3.5rem 3rem;
+  }
+}
+
 .title-card-content {
   max-width: 800px;
   margin-inline: auto;
-  padding-inline: 1.5rem;
+  padding-inline: 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -89,9 +95,9 @@ const handleSearch = () => {
 }
 
 .icon-wrapper {
-  margin-block-end: 1rem;
-  width: 60px;
-  height: 60px;
+  margin-block-end: 0.75rem;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-color);
@@ -102,42 +108,51 @@ const handleSearch = () => {
 }
 
 .gamepad-icon {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   color: var(--accent);
   filter: drop-shadow(0 0 8px var(--accent-glow));
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 4vw + 1rem, 4rem);
+  font-size: clamp(1.85rem, 5vw, 3.25rem);
   letter-spacing: -0.03em;
-  margin-block-end: 1rem;
+  margin-block-end: 0.75rem;
   background: linear-gradient(135deg, #fff 30%, var(--text-secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1.15;
 }
 
 .hero-description {
-  font-size: clamp(1rem, 1.5vw + 0.5rem, 1.15rem);
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
   color: var(--text-secondary);
   max-width: 600px;
-  line-height: 1.6;
-  margin-block-end: 0.5rem;
+  line-height: 1.5;
+  margin-block-end: 0.35rem;
+}
 
-  &:last-of-type {
-    margin-block-end: 2rem;
-  }
+.hero-description:last-of-type {
+  margin-block-end: 1.5rem;
 }
 
 .search-form {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
   width: 100%;
   max-width: 480px;
 }
 
 .search-input {
   flex-grow: 1;
-  height: 42px;
+  height: 44px;
+  min-height: 44px;
+  font-size: 16px;
+}
+
+.search-form button {
+  min-height: 44px;
+  padding-inline: 1.25rem;
+  white-space: nowrap;
 }
 
 .bottom-divider {
