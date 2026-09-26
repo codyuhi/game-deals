@@ -25,35 +25,94 @@
 
 @layer base {
   :root {
-    /* Color Palette */
-    --bg-primary: #090d16;
-    --bg-secondary: #0f1524;
-    --bg-card: rgba(22, 30, 49, 0.75);
-    --border-color: rgba(255, 255, 255, 0.08);
-    --border-color-hover: rgba(255, 255, 255, 0.16);
-    
-    --accent: #38bdf8; /* Sleek sky blue */
-    --accent-hover: #0ea5e9;
-    --accent-glow: rgba(56, 189, 248, 0.15);
-    
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    
-    --savings-green: #10b981;
-    --savings-green-glow: rgba(16, 185, 129, 0.15);
-    --rating-steam: #38bdf8;
-    --rating-metacritic: #ea580c;
-    
+    color-scheme: light;
+
+    /* Cedar Light — warm sandstone mid-tone layering */
+    --bg-primary: #ebe7df;
+    --bg-secondary: #f5f3ec;
+    --bg-card: #f5f3ec;
+    --bg-inset: #e4dfd4;
+    --bg-elevated: #dbd5c7;
+    --bg-field: #ffffff;
+    --border-color: #cdc7ba;
+    --border-color-hover: #aba496;
+
+    /* Spruce: --accent is for text, icons and outlines; --accent-solid fills buttons */
+    --accent: #1f513f;
+    --accent-hover: #184133;
+    --accent-glow: rgba(31, 81, 63, 0.14);
+    --accent-solid: #1f513f;
+    --accent-solid-hover: #184133;
+    --on-accent: #ffffff;
+
+    --text-emphasis: #141412;
+    --text-primary: #242320;
+    --text-secondary: #48453d;
+    --text-muted: #666257;
+
+    --savings-green: #1f513f;
+    --savings-green-glow: #d8e8dc;
+    --rating-steam: #204b67;
+    --rating-metacritic: #854714;
+    --heather: #70486c;
+
+    --danger: #811823;
+    --danger-solid: #c7370f;
+    --danger-bg: #eddcd5;
+
+    --overlay: rgba(20, 20, 18, 0.55);
+    --shadow-card: 0 1px 2px rgba(20, 20, 18, 0.08);
+    --shadow-raised: 0 8px 20px -8px rgba(20, 20, 18, 0.25);
+
     /* Safe Area Inset Variables */
     --sat: env(safe-area-inset-top, 0px);
     --sar: env(safe-area-inset-right, 0px);
     --sab: env(safe-area-inset-bottom, 0px);
     --sal: env(safe-area-inset-left, 0px);
 
-    /* Typography */
-    --font-heading: 'Outfit', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    /* Typography: Cedar serif headings, humanist sans body */
+    --font-heading: Stuart, "Source Serif 4", Georgia, Cambria, "Times New Roman", serif;
+    --font-body: Graphik, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: Pressura, "JetBrains Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+  }
+
+  /* Cedar Night */
+  :root.dark {
+    color-scheme: dark;
+
+    --bg-primary: #161614;
+    --bg-secondary: #22221f;
+    --bg-card: #22221f;
+    --bg-inset: #1b1b18;
+    --bg-elevated: #2d2c28;
+    --bg-field: #1a1a18;
+    --border-color: #383630;
+    --border-color-hover: #545149;
+
+    --accent: #48a97c;
+    --accent-hover: #5fbd90;
+    --accent-glow: rgba(72, 169, 124, 0.16);
+    --accent-solid: #235c48;
+    --accent-solid-hover: #2e745c;
+
+    --text-emphasis: #ffffff;
+    --text-primary: #f4f2ed;
+    --text-secondary: #d5cfc3;
+    --text-muted: #9e998e;
+
+    --savings-green: #4ade80;
+    --savings-green-glow: rgba(46, 107, 52, 0.22);
+    --rating-steam: #8fc1de;
+    --rating-metacritic: #fbbf24;
+    --heather: #d8a8d2;
+
+    --danger: #f87171;
+    --danger-solid: #e0532b;
+    --danger-bg: rgba(129, 24, 35, 0.22);
+
+    --overlay: rgba(0, 0, 0, 0.6);
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-raised: 0 10px 24px -8px rgba(0, 0, 0, 0.6);
   }
 
   body {
@@ -71,7 +130,7 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--text-emphasis);
     line-height: 1.2;
   }
 
@@ -93,27 +152,26 @@
   
   /* Scrollbar Customization */
   html {
-    scrollbar-color: rgba(255, 255, 255, 0.2) var(--bg-primary);
+    scrollbar-color: var(--border-color-hover) var(--bg-primary);
     scrollbar-width: thin;
   }
 }
 
 @layer components {
-  /* Sleek Glassmorphism Container */
+  /* Cedar surface card */
   .glass-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
-    backdrop-filter: blur(16px) saturate(120%);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    border-radius: 6px;
+    box-shadow: var(--shadow-card);
     transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
   }
 
   /* Form Elements */
   .form-input {
-    background: rgba(15, 21, 36, 0.8);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
+    background: var(--bg-field);
+    border: 1px solid var(--border-color-hover);
+    border-radius: 6px;
     color: var(--text-primary);
     padding: 0.6rem 1rem;
     font-size: 16px; /* Prevents iOS Safari auto-zoom */
@@ -139,19 +197,19 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    background: var(--accent);
-    color: #0b0f19;
-    font-family: var(--font-heading);
+    background: var(--accent-solid);
+    color: var(--on-accent);
+    font-family: var(--font-body);
     font-weight: 600;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
+    min-height: 44px;
     padding: 0.5rem 1.25rem;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
 
     &:hover:not(:disabled) {
-      background-color: var(--accent-hover);
-      box-shadow: 0 0 12px var(--accent-glow);
+      background-color: var(--accent-solid-hover);
     }
 
     &:active:not(:disabled) {
@@ -169,19 +227,19 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    background: transparent;
+    background: var(--bg-secondary);
     color: var(--text-primary);
-    font-family: var(--font-heading);
+    font-family: var(--font-body);
     font-weight: 600;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border: 1px solid var(--border-color-hover);
+    border-radius: 6px;
+    min-height: 44px;
     padding: 0.5rem 1.25rem;
     cursor: pointer;
     transition: border-color 0.2s ease, background-color 0.2s ease;
 
     &:hover:not(:disabled) {
-      border-color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--bg-inset);
     }
 
     &:active:not(:disabled) {
@@ -194,19 +252,19 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    background: rgba(239, 68, 68, 0.15);
-    color: #f87171;
-    font-family: var(--font-heading);
+    background: var(--danger-bg);
+    color: var(--danger);
+    font-family: var(--font-body);
     font-weight: 600;
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    border-radius: 8px;
+    border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
+    border-radius: 6px;
     padding: 0.35rem 0.75rem;
     font-size: 0.85rem;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
 
     &:hover:not(:disabled) {
-      background: #ef4444;
+      background: var(--danger-solid);
       color: #fff;
     }
   }
@@ -226,19 +284,19 @@
   .badge-savings {
     background: var(--savings-green-glow);
     color: var(--savings-green);
-    border: 1px solid rgba(16, 185, 129, 0.25);
+    border: 1px solid color-mix(in srgb, var(--savings-green) 30%, transparent);
   }
 
   .badge-steam {
-    background: rgba(56, 189, 248, 0.1);
+    background: color-mix(in srgb, var(--rating-steam) 10%, transparent);
     color: var(--rating-steam);
-    border: 1px solid rgba(56, 189, 248, 0.2);
+    border: 1px solid color-mix(in srgb, var(--rating-steam) 25%, transparent);
   }
 
   .badge-metacritic {
-    background: rgba(234, 88, 12, 0.1);
+    background: color-mix(in srgb, var(--rating-metacritic) 10%, transparent);
     color: var(--rating-metacritic);
-    border: 1px solid rgba(234, 88, 12, 0.25);
+    border: 1px solid color-mix(in srgb, var(--rating-metacritic) 25%, transparent);
   }
 
   /* Loading State */
@@ -253,7 +311,7 @@
     .spinner {
       inline-size: 40px;
       block-size: 40px;
-      border: 3px solid rgba(255, 255, 255, 0.1);
+      border: 3px solid var(--border-color);
       border-radius: 50%;
       border-top-color: var(--accent);
       animation: spin 1s ease-in-out infinite;

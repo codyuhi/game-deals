@@ -128,7 +128,7 @@ const handleFavorite = (e: Event) => {
 
   &:hover {
     border-color: var(--border-color-hover);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.02);
+    box-shadow: var(--shadow-raised);
     transform: translateY(-4px);
   }
 
@@ -141,7 +141,7 @@ const handleFavorite = (e: Event) => {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: var(--bg-inset);
   overflow: hidden;
 }
 
@@ -168,6 +168,10 @@ const handleFavorite = (e: Event) => {
   right: 0.75rem;
   z-index: 2;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  /* Solid fill: it sits on top of cover art, where a tint would be unreadable */
+  background: var(--accent-solid);
+  color: var(--on-accent);
+  border-color: transparent;
 }
 
 .card-body {
@@ -261,7 +265,7 @@ const handleFavorite = (e: Event) => {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: color-mix(in srgb, var(--text-primary) 3%, transparent);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   padding: 0.25rem 0.5rem;
@@ -276,12 +280,12 @@ const handleFavorite = (e: Event) => {
 
 .badge-steam {
   color: var(--rating-steam);
-  border-color: rgba(56, 189, 248, 0.15);
+  border-color: color-mix(in srgb, var(--accent) 15%, transparent);
 }
 
 .badge-metacritic {
   color: var(--rating-metacritic);
-  border-color: rgba(234, 88, 12, 0.2);
+  border-color: color-mix(in srgb, var(--rating-metacritic) 20%, transparent);
 }
 
 .card-footer {
@@ -314,7 +318,7 @@ const handleFavorite = (e: Event) => {
   }
 
   &:hover {
-    color: #f43f5e;
+    color: var(--danger-solid);
     
     i {
       transform: scale(1.15);

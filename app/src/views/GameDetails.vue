@@ -226,7 +226,7 @@ onMounted(async () => {
   aspect-ratio: 16 / 9;
   border-radius: 8px;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-inset);
   align-self: center;
   border: 1px solid var(--border-color);
 }
@@ -252,9 +252,9 @@ onMounted(async () => {
 }
 
 .cheapest-ever-box {
-  background: rgba(255, 255, 255, 0.02);
+  background: color-mix(in srgb, var(--text-primary) 2%, transparent);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 1rem 1.25rem;
   width: fit-content;
   min-width: 250px;
@@ -296,7 +296,7 @@ onMounted(async () => {
   }
   
   &:hover i {
-    color: #f43f5e;
+    color: var(--danger-solid);
     transform: scale(1.1);
   }
 }
@@ -359,7 +359,7 @@ onMounted(async () => {
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.01);
+    background: color-mix(in srgb, var(--text-primary) 1%, transparent);
   }
 }
 

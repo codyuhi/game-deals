@@ -352,13 +352,13 @@ onMounted(() => {
   transition: background-color 0.2s ease, color 0.2s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: color-mix(in srgb, var(--text-primary) 5%, transparent);
     color: var(--text-primary);
   }
   
   &.delete-btn:hover {
-    background: rgba(239, 68, 68, 0.1);
-    color: #f87171;
+    background: color-mix(in srgb, var(--danger-solid) 10%, transparent);
+    color: var(--danger);
   }
 }
 
@@ -387,16 +387,16 @@ onMounted(() => {
 .success-btn {
   color: var(--savings-green);
   &:hover {
-    background: rgba(16, 185, 129, 0.1);
+    background: color-mix(in srgb, var(--savings-green) 10%, transparent);
     color: var(--savings-green);
   }
 }
 
 .cancel-btn {
-  color: #f87171;
+  color: var(--danger);
   &:hover {
-    background: rgba(239, 68, 68, 0.1);
-    color: #f87171;
+    background: color-mix(in srgb, var(--danger-solid) 10%, transparent);
+    color: var(--danger);
   }
 }
 
@@ -405,7 +405,7 @@ onMounted(() => {
   top: 34px;
   left: 0;
   font-size: 0.7rem;
-  color: #f87171;
+  color: var(--danger);
 }
 
 /* Delete Confirm Overlay */
@@ -464,15 +464,15 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 0.75rem;
-  background: rgba(0, 0, 0, 0.15);
+  background: var(--bg-inset);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 0.9rem;
   transition: border-color 0.2s ease, background-color 0.2s ease;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.01);
+    border-color: var(--border-color-hover);
+    background: color-mix(in srgb, var(--text-primary) 1%, transparent);
   }
 }
 
@@ -499,7 +499,7 @@ onMounted(() => {
   transition: color 0.2s ease;
 
   &:hover {
-    color: #f87171;
+    color: var(--danger);
   }
 }
 
@@ -519,7 +519,7 @@ onMounted(() => {
 .text-danger-link {
   background: transparent;
   border: none;
-  color: #f87171;
+  color: var(--danger);
   font-weight: 600;
   cursor: pointer;
   padding: 0;

@@ -6,26 +6,25 @@ const props = defineProps<{
   title: string
   descriptions: string[]
   showSearchButton?: boolean
-  imgClass?: string // We use this to compute gradients instead of background images
+  imgClass?: string // Picks the page's Cedar accent strip color
 }>()
 
 const searchString = ref('')
 const router = useRouter()
 
-const gradientStyle = computed(() => {
+// Each page gets a Cedar pigment for the strip across the top of its title card
+const accentColor = computed(() => {
   switch (props.imgClass) {
-    case 'main-img': // Sky Blue Theme
-      return 'radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
-    case 'deals-img': // Emerald/Teal Theme
-      return 'radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
-    case 'games-img': // Sky/Blue Theme
-      return 'radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
-    case 'search-img': // Indigo/Purple Theme
-      return 'radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
-    case 'favorites-img': // Rose/Crimson Theme
-      return 'radial-gradient(circle at 80% 20%, rgba(244, 63, 94, 0.08) 0%, rgba(9, 13, 22, 0) 60%)'
+    case 'deals-img':
+      return '#3b6b4c' // Lichen
+    case 'games-img':
+      return '#204b67' // Juniper
+    case 'search-img':
+      return '#70486c' // Heather
+    case 'favorites-img':
+      return '#c7370f' // Rust
     default:
-      return 'radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.03) 0%, rgba(9, 13, 22, 0) 50%)'
+      return '#1f513f' // Spruce
   }
 })
 
@@ -40,7 +39,8 @@ const handleSearch = () => {
 </script>
 
 <template>
-  <div class="title-card-container" :style="{ backgroundImage: gradientStyle }">
+  <div class="title-card-container" :style="{ '--title-accent': accentColor }">
+    <div class="accent-strip"></div>
     <div class="title-card-content">
       <div class="icon-wrapper">
         <i class="fa fa-gamepad gamepad-icon"></i>
@@ -76,6 +76,14 @@ const handleSearch = () => {
   background-color: var(--bg-secondary);
 }
 
+.accent-strip {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 4px;
+  background: var(--title-accent);
+}
+
 @media (min-width: 640px) {
   .title-card-container {
     padding-block: 3.5rem 3rem;
@@ -99,27 +107,24 @@ const handleSearch = () => {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.03);
+  background: color-mix(in srgb, var(--text-primary) 3%, transparent);
   border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.02);
+  box-shadow: inset 0 0 10px color-mix(in srgb, var(--text-primary) 2%, transparent);
 }
 
 .gamepad-icon {
   font-size: 1.5rem;
   color: var(--accent);
-  filter: drop-shadow(0 0 8px var(--accent-glow));
 }
 
 .hero-title {
   font-size: clamp(1.85rem, 5vw, 3.25rem);
   letter-spacing: -0.03em;
   margin-block-end: 0.75rem;
-  background: linear-gradient(135deg, #fff 30%, var(--text-secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-emphasis);
   line-height: 1.15;
 }
 

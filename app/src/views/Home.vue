@@ -316,11 +316,12 @@ onMounted(async () => {
 }
 
 .deal-count-badge {
+  font-family: var(--font-body);
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--accent);
   background: var(--accent-glow);
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
   padding: 0.2rem 0.6rem;
   border-radius: 9999px;
   vertical-align: middle;
@@ -348,7 +349,7 @@ onMounted(async () => {
   height: 40px;
   min-height: 40px;
   font-size: 16px;
-  background: rgba(9, 13, 22, 0.6);
+  background: color-mix(in srgb, var(--bg-primary) 60%, transparent);
 }
 
 .clear-filter-btn {
@@ -398,7 +399,7 @@ onMounted(async () => {
 
 .filter-pill-btn,
 .sort-pill-btn {
-  background: rgba(15, 21, 36, 0.7);
+  background: color-mix(in srgb, var(--bg-secondary) 70%, transparent);
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
   padding: 0.4rem 0.8rem;
@@ -424,10 +425,9 @@ onMounted(async () => {
 
 .filter-pill-btn.active,
 .sort-pill-btn.active {
-  background: var(--accent);
-  color: #090d16;
-  border-color: var(--accent);
-  box-shadow: 0 0 10px var(--accent-glow);
+  background: var(--accent-solid);
+  color: var(--on-accent);
+  border-color: var(--accent-solid);
 }
 
 .store-pill-icon {

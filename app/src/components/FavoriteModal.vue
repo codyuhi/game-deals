@@ -170,7 +170,7 @@ defineExpose({
   outline: none;
 
   &::backdrop {
-    background: rgba(4, 6, 10, 0.7);
+    background: var(--overlay);
     backdrop-filter: blur(6px);
   }
 }
@@ -220,9 +220,9 @@ defineExpose({
 }
 
 .error-banner {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  color: #f87171;
+  background: color-mix(in srgb, var(--danger-solid) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--danger-solid) 20%, transparent);
+  color: var(--danger);
   padding: 0.75rem;
   border-radius: 8px;
   font-size: 0.85rem;

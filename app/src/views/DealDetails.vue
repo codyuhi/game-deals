@@ -374,7 +374,7 @@ onMounted(async () => {
 
 .sale-val {
   font-size: 1.8rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--accent);
   line-height: 1;
 }
@@ -385,7 +385,7 @@ onMounted(async () => {
   gap: 0.35rem;
   font-size: 0.85rem;
   color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.03);
+  background: color-mix(in srgb, var(--text-primary) 3%, transparent);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   padding: 0.25rem 0.5rem;
@@ -425,14 +425,14 @@ onMounted(async () => {
 .better-deals-alert {
   display: flex;
   gap: 0.75rem;
-  background: rgba(239, 68, 68, 0.05);
-  border: 1px solid rgba(239, 68, 68, 0.15);
+  background: color-mix(in srgb, var(--danger-solid) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--danger-solid) 15%, transparent);
   padding: 1rem;
   border-radius: 8px;
   
   .info-icon {
     font-size: 1.25rem;
-    color: #f87171;
+    color: var(--danger);
     margin-top: 0.1rem;
   }
 }
@@ -440,7 +440,7 @@ onMounted(async () => {
 .alert-title {
   font-weight: 600;
   font-size: 0.9rem;
-  color: #f87171;
+  color: var(--danger);
   margin-block-end: 0.5rem;
 }
 
@@ -454,7 +454,7 @@ onMounted(async () => {
   
   li::before {
     content: "•";
-    color: #ef4444;
+    color: var(--danger-solid);
     display: inline-block;
     width: 1em;
     margin-left: 0.25rem;
@@ -465,8 +465,8 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: rgba(16, 185, 129, 0.05);
-  border: 1px solid rgba(16, 185, 129, 0.15);
+  background: color-mix(in srgb, var(--savings-green) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--savings-green) 15%, transparent);
   padding: 1rem;
   border-radius: 8px;
   color: var(--savings-green);

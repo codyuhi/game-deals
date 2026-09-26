@@ -53,15 +53,15 @@ defineProps<{
 
   &:hover {
     border-color: var(--border-color-hover);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-raised);
   }
 }
 
 .tile-image-wrapper {
   width: 100%;
   aspect-ratio: 16 / 9;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
+  background-color: var(--bg-inset);
+  border-radius: 6px;
   overflow: hidden;
   display: flex;
   align-items: center;

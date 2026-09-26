@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import ThemeToggle from './components/ThemeToggle.vue'
 
 const searchString = ref('')
 const mobileSearchOpen = ref(false)
@@ -55,6 +56,8 @@ const toggleMobileSearch = () => {
               <i class="fa fa-search"></i>
             </button>
           </form>
+
+          <ThemeToggle />
 
           <!-- Mobile Search Toggle Button -->
           <button
@@ -151,7 +154,7 @@ const toggleMobileSearch = () => {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(9, 13, 22, 0.9);
+  background: color-mix(in srgb, var(--bg-primary) 90%, transparent);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-color);
@@ -186,7 +189,7 @@ const toggleMobileSearch = () => {
 .brand-text {
   font-family: var(--font-heading);
   font-size: 1.25rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 
@@ -201,7 +204,7 @@ const toggleMobileSearch = () => {
   align-items: center;
   gap: 0.4rem;
   color: var(--text-secondary);
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
   font-weight: 600;
   font-size: 0.95rem;
   transition: color 0.2s ease;
@@ -217,7 +220,7 @@ const toggleMobileSearch = () => {
 }
 
 .nav-link:hover i {
-  color: #f43f5e;
+  color: var(--danger-solid);
   transform: scale(1.1);
 }
 
@@ -271,7 +274,7 @@ const toggleMobileSearch = () => {
 /* Expandable Mobile Search Bar */
 .mobile-search-bar {
   padding: 0.6rem 1.25rem 0.5rem;
-  background: rgba(15, 21, 36, 0.95);
+  background: color-mix(in srgb, var(--bg-secondary) 95%, transparent);
   border-top: 1px solid var(--border-color);
   animation: slideDown 0.2s ease-out;
 }
@@ -354,15 +357,15 @@ const toggleMobileSearch = () => {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(9, 13, 22, 0.94);
+  background: color-mix(in srgb, var(--bg-primary) 94%, transparent);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 0.45rem 1rem calc(0.45rem + var(--sab)) 1rem;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-card);
 }
 
 .bottom-nav-item {
@@ -375,7 +378,7 @@ const toggleMobileSearch = () => {
   text-decoration: none;
   font-size: 0.725rem;
   font-weight: 600;
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
   padding: 0.35rem 1rem;
   border-radius: 8px;
   min-height: 44px;
@@ -395,7 +398,6 @@ const toggleMobileSearch = () => {
 
 .bottom-nav-item.active i {
   transform: scale(1.1);
-  filter: drop-shadow(0 0 6px var(--accent-glow));
 }
 
 .bottom-nav-item:active {
