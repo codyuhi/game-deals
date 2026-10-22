@@ -7,7 +7,7 @@ COPY app/ ./
 RUN yarn build
 
 # Production Stage
-FROM nginx:1.25.1-alpine AS production-stage
+FROM nginxinc/nginx-unprivileged:1.30-alpine AS production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
-EXPOSE 80
+EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
