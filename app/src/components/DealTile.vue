@@ -29,6 +29,15 @@ const storeInfo = computed(() => {
   }
 })
 
+const hasSteamAppId = computed(() => {
+  const id = props.deal.steamAppID
+  return Boolean(id && id !== '0' && id !== 'null' && String(id).trim() !== '')
+})
+
+const protonDbUrl = computed(() => {
+  return hasSteamAppId.value ? `https://www.protondb.com/app/${props.deal.steamAppID}` : ''
+})
+
 const handleFavorite = (e: Event) => {
   e.preventDefault()
   e.stopPropagation()
@@ -102,6 +111,20 @@ const handleFavorite = (e: Event) => {
           <i class="fa fa-star"></i>
           <span>MC {{ deal.metacriticScore }}</span>
         </div>
+
+        <a
+          v-if="hasSteamAppId"
+          :href="protonDbUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rating-badge badge-deck"
+          title="Check Steam Deck & ProtonDB compatibility reports"
+          @click.stop
+        >
+          <i class="fa fa-gamepad"></i>
+          <span>Deck / Proton</span>
+          <i class="fa fa-external-link-alt ext-icon"></i>
+        </a>
       </div>
     </div>
 
@@ -286,6 +309,26 @@ const handleFavorite = (e: Event) => {
 .badge-metacritic {
   color: var(--rating-metacritic);
   border-color: color-mix(in srgb, var(--rating-metacritic) 20%, transparent);
+}
+
+.badge-deck {
+  color: var(--heather);
+  border-color: color-mix(in srgb, var(--heather) 30%, transparent);
+  background: color-mix(in srgb, var(--heather) 8%, transparent);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: var(--heather);
+    border-color: var(--heather);
+    background: color-mix(in srgb, var(--heather) 18%, transparent);
+  }
+
+  .ext-icon {
+    font-size: 0.65rem;
+    opacity: 0.8;
+  }
 }
 
 .card-footer {

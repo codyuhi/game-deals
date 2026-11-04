@@ -299,6 +299,20 @@
     border: 1px solid color-mix(in srgb, var(--rating-metacritic) 25%, transparent);
   }
 
+  .badge-deck {
+    background: color-mix(in srgb, var(--heather) 12%, transparent);
+    color: var(--heather);
+    border: 1px solid color-mix(in srgb, var(--heather) 30%, transparent);
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+
+    &:hover {
+      background: color-mix(in srgb, var(--heather) 22%, transparent);
+      border-color: var(--heather);
+      color: var(--heather);
+    }
+  }
+
   /* Loading State */
   .loader {
     display: flex;

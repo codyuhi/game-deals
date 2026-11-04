@@ -21,6 +21,7 @@ export interface Deal {
   savings: string;
   dealRating: string;
   releaseDate: number;
+  steamAppID?: string | null;
   steamRatingText: string | null;
   steamRatingPercent: string;
   steamRatingCount: string;

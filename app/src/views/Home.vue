@@ -15,6 +15,8 @@ const favModalRef = ref<InstanceType<typeof FavoriteModal> | null>(null)
 
 // Filtering & Sorting State
 const selectedStoreID = ref<string>('all')
+const selectedPriceTier = ref<'all' | 'free' | '5' | '10' | '20'>('all')
+const steamOnly = ref<boolean>(false)
 const sortBy = ref<'dealRating' | 'savings' | 'price' | 'steam'>('dealRating')
 const quickSearchText = ref<string>('')
 
@@ -80,6 +82,24 @@ const filteredDeals = computed(() => {
     list = list.filter(d => d.storeID === selectedStoreID.value)
   }
 
+  // Filter by budget price tier (DEAL-6)
+  if (selectedPriceTier.value !== 'all') {
+    list = list.filter(d => {
+      const sale = parseFloat(d.salePrice)
+      const savings = parseFloat(d.savings)
+      if (selectedPriceTier.value === 'free') {
+        return sale === 0 || savings >= 100
+      }
+      const maxPrice = parseFloat(selectedPriceTier.value)
+      return !isNaN(sale) && sale <= maxPrice
+    })
+  }
+
+  // Filter by Steam-redeemable keys (DEAL-7)
+  if (steamOnly.value) {
+    list = list.filter(d => Boolean(d.steamAppID && d.steamAppID !== '0' && d.steamAppID !== 'null'))
+  }
+
   // Filter by quick search text
   if (quickSearchText.value.trim()) {
     const q = quickSearchText.value.toLowerCase().trim()
@@ -110,6 +130,8 @@ const filteredDeals = computed(() => {
 
 const resetFilters = () => {
   selectedStoreID.value = 'all'
+  selectedPriceTier.value = 'all'
+  steamOnly.value = false
   quickSearchText.value = ''
   sortBy.value = 'dealRating'
 }
@@ -195,6 +217,76 @@ onMounted(async () => {
             </div>
           </div>
 
+          <!-- Quick Budget Price Tiers (DEAL-6) -->
+          <div class="pills-section budget-section">
+            <span class="pills-label">Budget:</span>
+            <div class="pills-scroll-strip" role="tablist" aria-label="Filter by price tier">
+              <button
+                type="button"
+                class="filter-pill-btn"
+                :class="{ active: selectedPriceTier === 'all' }"
+                @click="selectedPriceTier = 'all'"
+              >
+                All Deals
+              </button>
+              <button
+                type="button"
+                class="filter-pill-btn"
+                :class="{ active: selectedPriceTier === 'free' }"
+                @click="selectedPriceTier = 'free'"
+              >
+                🎁 Free (100% Off)
+              </button>
+              <button
+                type="button"
+                class="filter-pill-btn"
+                :class="{ active: selectedPriceTier === '5' }"
+                @click="selectedPriceTier = '5'"
+              >
+                Under $5
+              </button>
+              <button
+                type="button"
+                class="filter-pill-btn"
+                :class="{ active: selectedPriceTier === '10' }"
+                @click="selectedPriceTier = '10'"
+              >
+                Under $10
+              </button>
+              <button
+                type="button"
+                class="filter-pill-btn"
+                :class="{ active: selectedPriceTier === '20' }"
+                @click="selectedPriceTier = '20'"
+              >
+                Under $20
+              </button>
+            </div>
+          </div>
+
+          <!-- Platform / Steam Filter (DEAL-7) -->
+          <div class="pills-section platform-section">
+            <span class="pills-label">Platform:</span>
+            <div class="pills-scroll-strip" role="tablist" aria-label="Filter by platform">
+              <button
+                type="button"
+                class="filter-pill-btn"
+                :class="{ active: !steamOnly }"
+                @click="steamOnly = false"
+              >
+                All Keys
+              </button>
+              <button
+                type="button"
+                class="filter-pill-btn steam-pill-btn"
+                :class="{ active: steamOnly }"
+                @click="steamOnly = !steamOnly"
+              >
+                <i class="fab fa-steam"></i> Steam / Deck Ready
+              </button>
+            </div>
+          </div>
+
           <!-- Sort Selection Pills -->
           <div class="pills-section sort-section">
             <span class="pills-label">Sort:</span>
@@ -246,13 +338,13 @@ onMounted(async () => {
           />
         </div>
 
-        <!-- Empty Filter Results -->
+        <!-- Empty Filter Results (DEAL-6 Acceptance Criteria) -->
         <div v-else class="empty-filter glass-card">
           <i class="fa fa-tag empty-icon"></i>
-          <h3>No deals match your filter</h3>
-          <p>Try clearing your search term or switching stores.</p>
+          <h3>No deals match your filter criteria</h3>
+          <p>Try loosening your budget tier, clearing search terms, or resetting active store filters.</p>
           <button @click="resetFilters" class="btn-primary reset-btn">
-            Reset Filters
+            Reset All Filters
           </button>
         </div>
       </main>
@@ -428,6 +520,12 @@ onMounted(async () => {
   background: var(--accent-solid);
   color: var(--on-accent);
   border-color: var(--accent-solid);
+}
+
+.steam-pill-btn.active {
+  background: var(--rating-steam);
+  border-color: var(--rating-steam);
+  color: #ffffff;
 }
 
 .store-pill-icon {

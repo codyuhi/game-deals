@@ -20,6 +20,15 @@ const descriptions = computed(() => {
   return game.value ? [`More information about ${game.value.info.title}`] : []
 })
 
+const hasSteamAppId = computed(() => {
+  const id = game.value?.info?.steamAppID
+  return Boolean(id && id !== '0' && id !== 'null' && String(id).trim() !== '')
+})
+
+const protonDbUrl = computed(() => {
+  return hasSteamAppId.value ? `https://www.protondb.com/app/${game.value?.info?.steamAppID}` : ''
+})
+
 const getStoreData = async () => {
   if (localStorage.storeData) {
     try {
@@ -143,6 +152,32 @@ onMounted(async () => {
               <i class="fa fa-heart"></i> Add to Favorites
             </button>
           </div>
+        </section>
+
+        <!-- Steam Deck & ProtonDB Compatibility (DEAL-7) -->
+        <section v-if="hasSteamAppId" class="deck-compat-card glass-card">
+          <div class="deck-icon-badge">
+            <i class="fa fa-gamepad"></i>
+          </div>
+          <div class="deck-info">
+            <div class="deck-header-row">
+              <h3 class="deck-title">Steam Deck & ProtonDB Compatibility</h3>
+              <span class="badge badge-deck">Deck Ready</span>
+            </div>
+            <p class="deck-desc">
+              Check community performance reports, launch tweaks, and Proton ratings for
+              <strong>{{ game.info.title }}</strong> on handheld devices.
+            </p>
+          </div>
+          <a
+            :href="protonDbUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-secondary deck-link-btn"
+          >
+            <span>View on ProtonDB</span>
+            <i class="fa fa-external-link-alt"></i>
+          </a>
         </section>
 
         <!-- Deals Listing Section -->
@@ -413,6 +448,75 @@ onMounted(async () => {
   .game-cover-wrapper {
     max-width: 240px;
     align-self: auto;
+  }
+}
+
+/* Steam Deck Compatibility Card (DEAL-7) */
+.deck-compat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  margin-block-end: 2rem;
+  align-items: flex-start;
+  border-left: 3px solid var(--heather);
+}
+
+@media (min-width: 640px) {
+  .deck-compat-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+  }
+}
+
+.deck-icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--heather) 15%, transparent);
+  color: var(--heather);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.deck-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.deck-header-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.deck-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.deck-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.deck-link-btn {
+  white-space: nowrap;
+  gap: 0.5rem;
+  align-self: flex-start;
+}
+
+@media (min-width: 640px) {
+  .deck-link-btn {
+    align-self: center;
   }
 }
 </style>

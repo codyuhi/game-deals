@@ -226,7 +226,7 @@ onMounted(async () => {
                 </div>
 
                 <!-- Metacritic Rating -->
-                <div v-if="deal.gameInfo.metacriticScore && deal.gameInfo.metacriticScore !== '0'" class="rating-block">
+                <div v-if="deal.gameInfo.metacriticScore && deal.gameInfo.metacriticScore !== '0'" class="rating-block" :class="{ 'border-right': Boolean(deal.gameInfo.steamAppID && deal.gameInfo.steamAppID !== '0') }">
                   <span class="rating-label"><i class="fa fa-star"></i> Metacritic</span>
                   <span class="rating-summary text-metacritic">{{ deal.gameInfo.metacriticScore }}</span>
                   <a
@@ -237,9 +237,26 @@ onMounted(async () => {
                     Read official critic reviews <i class="fa fa-external-link-alt"></i>
                   </a>
                 </div>
-                <div v-else class="rating-block empty-rating">
+                <div v-else class="rating-block empty-rating" :class="{ 'border-right': Boolean(deal.gameInfo.steamAppID && deal.gameInfo.steamAppID !== '0') }">
                   <span class="rating-label"><i class="fa fa-star"></i> Metacritic</span>
                   <p class="rating-detail">No Metacritic reviews listed.</p>
+                </div>
+
+                <!-- Steam Deck / ProtonDB Block (DEAL-7) -->
+                <div v-if="deal.gameInfo.steamAppID && deal.gameInfo.steamAppID !== '0'" class="rating-block">
+                  <span class="rating-label"><i class="fa fa-gamepad"></i> Steam Deck / Proton</span>
+                  <span class="rating-summary text-deck">ProtonDB Ready</span>
+                  <p class="rating-detail">
+                    Community handheld compatibility reports and launch tweaks.
+                  </p>
+                  <a
+                    :href="'https://www.protondb.com/app/' + deal.gameInfo.steamAppID"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="reviews-link text-deck"
+                  >
+                    View on ProtonDB <i class="fa fa-external-link-alt"></i>
+                  </a>
                 </div>
               </div>
             </div>
@@ -517,6 +534,10 @@ onMounted(async () => {
 
 .text-metacritic {
   color: var(--rating-metacritic);
+}
+
+.text-deck {
+  color: var(--heather);
 }
 
 .rating-detail {

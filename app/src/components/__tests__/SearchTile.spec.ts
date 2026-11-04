@@ -30,5 +30,28 @@ describe('SearchTile.vue', () => {
     expect(wrapper.text()).toContain('Dave the Diver')
     expect(wrapper.text()).toContain('14.99')
     expect(wrapper.find('img').attributes('src')).toBe('https://example.com/dave.jpg')
+    const deckBadge = wrapper.find('.badge-deck')
+    expect(deckBadge.exists()).toBe(true)
+    expect(deckBadge.attributes('href')).toBe('https://www.protondb.com/app/98765')
+  })
+
+  it('omits ProtonDB badge when game has no steamAppID', () => {
+    const wrapper = mount(SearchTile, {
+      props: {
+        game: {
+          ...mockGame,
+          steamAppID: null
+        }
+      },
+      global: {
+        stubs: {
+          RouterLink: {
+            template: '<a><slot /></a>'
+          }
+        }
+      }
+    })
+
+    expect(wrapper.find('.badge-deck').exists()).toBe(false)
   })
 })

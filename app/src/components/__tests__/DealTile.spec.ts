@@ -78,4 +78,54 @@ describe('DealTile.vue', () => {
       id: '10'
     })
   })
+
+  it('renders ProtonDB / Steam Deck compatibility badge when steamAppID is present (DEAL-7)', () => {
+    const dealWithSteam: Deal = {
+      ...mockDeal,
+      steamAppID: '620'
+    }
+
+    const wrapper = mount(DealTile, {
+      props: {
+        deal: dealWithSteam,
+        storeData: mockStores
+      },
+      global: {
+        stubs: {
+          RouterLink: {
+            template: '<a><slot /></a>'
+          }
+        }
+      }
+    })
+
+    const deckBadge = wrapper.find('.badge-deck')
+    expect(deckBadge.exists()).toBe(true)
+    expect(deckBadge.attributes('href')).toBe('https://www.protondb.com/app/620')
+    expect(deckBadge.text()).toContain('Deck / Proton')
+  })
+
+  it('gracefully omits ProtonDB badge for deals without steamAppID (DEAL-7)', () => {
+    const dealWithoutSteam: Deal = {
+      ...mockDeal,
+      steamAppID: null
+    }
+
+    const wrapper = mount(DealTile, {
+      props: {
+        deal: dealWithoutSteam,
+        storeData: mockStores
+      },
+      global: {
+        stubs: {
+          RouterLink: {
+            template: '<a><slot /></a>'
+          }
+        }
+      }
+    })
+
+    const deckBadge = wrapper.find('.badge-deck')
+    expect(deckBadge.exists()).toBe(false)
+  })
 })
