@@ -1,5 +1,5 @@
 # Build Stage
-FROM node:22-alpine AS build-stage
+FROM node:25-alpine AS build-stage
 WORKDIR /app
 COPY app/package.json app/yarn.lock ./
 RUN yarn install --frozen-lockfile
@@ -7,7 +7,7 @@ COPY app/ ./
 RUN yarn build
 
 # Production Stage
-FROM nginxinc/nginx-unprivileged:1.30-alpine AS production-stage
+FROM nginxinc/nginx-unprivileged:1.31-alpine AS production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]

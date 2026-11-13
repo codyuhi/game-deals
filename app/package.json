@@ -1,7 +1,7 @@
 {
   "name": "app",
   "private": true,
-  "version": "1.2.4",
+  "version": "1.2.6",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,20 +11,20 @@
     "test:run": "vitest run"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.6.0",
+    "@fortawesome/fontawesome-free": "^7.3.1",
     "vue": "^3.5.39",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@types/node": "^24.13.2",
+    "@types/node": "^26.6.6",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.9.1",
     "jsdom": "^24.1.0",
     "typescript": "~6.0.2",
-    "vite": "^8.3.5",
-    "vitest": "^4.1.12",
-    "vue-tsc": "^3.3.5"
+    "vite": "^8.3.7",
+    "vitest": "^5.1.0",
+    "vue-tsc": "^3.3.14"
   },
   "resolutions": {
     "minimatch": "11.0.4",
