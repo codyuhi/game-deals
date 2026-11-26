@@ -11,6 +11,7 @@ val appVersionCode = appVersionName.substringBefore('-').split('.').map { it.toI
     .coerceAtLeast(1)
 
 android {
+    ndkVersion = "28.0.13004108"
     namespace = "online.codyuhi.gamedeals"
     compileSdk = 37
 
